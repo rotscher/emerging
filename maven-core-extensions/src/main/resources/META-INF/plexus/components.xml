@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-set>
+    <components>
+        <component>
+            <!-- this component uses the original implementation...  -->
+            <role>org.apache.maven.model.building.ModelProcessor</role>
+            <role-hint>default</role-hint>
+            <implementation>org.apache.maven.model.building.DefaultModelProcessor</implementation>
+            <description/>
+            <isolated-realm>false</isolated-realm>
+            <requirements>
+                <requirement>
+                    <role>org.apache.maven.model.locator.ModelLocator</role>
+                    <role-hint/>
+                    <field-name>locator</field-name>
+                </requirement>
+                <requirement>
+                    <role>org.apache.maven.model.io.ModelReader</role>
+                    <!-- ... but injects a different implementation of ModelReader ...  -->
+                    <role-hint>custom-version-model-reader</role-hint>
+                    <field-name>reader</field-name>
+                </requirement>
+            </requirements>
+        </component>
+        <component>
+            <!-- ... which is defined here!  -->
+            <role>org.apache.maven.model.io.ModelReader</role>
+            <role-hint>custom-version-model-reader</role-hint>
+            <implementation>ch.rotscher.mavenext.CustomVersionModelReader</implementation>
+            <description/>
+            <isolated-realm>false</isolated-realm>
+        </component>
+    </components>
+</component-set>
