@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>multi</groupId>
+        <groupId>test-group</groupId>
         <artifactId>root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
