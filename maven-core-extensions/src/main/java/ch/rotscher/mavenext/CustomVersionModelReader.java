@@ -1,5 +1,24 @@
 package ch.rotscher.mavenext;
 
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,26 +36,28 @@ import org.codehaus.plexus.logging.Logger;
 
 /**
  * <p>
- * extension of {@link org.apache.maven.model.io.ModelReader} for changing ${project.version} from the pom.xml with the value given as a Java system property:
+ * extension of {@link org.apache.maven.model.io.ModelReader} for overriding ${project.version} with the value given as a Java system property:
  * </p>
  * <p>
- * <code>-Dmavenext.release.version=A-VERSION</code><br />
+ * <code>-Dversion.override=A-VERSION</code><br />
  * <br />
  * other options are:<br />
- * <code>-Dmavenext.check.snapshot-dep.failOnError=[true | false]</code><br />
- * <code>-Dmavenext.check.snapshot-dep=[true | false]</code><br />
+ * <code>-Dversion.override.fail-on-error=[true | false]</code><br />
+ * <code>-Dversion.override.check-snapshot-dependency=[true | false]</code><br />
  * </p>
  * <p>
- * This class helps releasing a project (from a maven point of view, that means no having "SNAPSHOT" in the version) without actually changing (and committing)
+ * This class helps releasing a project (from a maven point of view, that means not having "SNAPSHOT" in the version) without actually changing (and committing)
  * the pom.xml
  * </p>
+ * 
+ * @author Roger Brechbühl
  */
 @Component(role = ModelReader.class, hint = "custom-version-model-reader")
 public class CustomVersionModelReader extends DefaultModelReader implements ModelReader {
 
-    static final String MAVENEXT_RELEASE_VERSION = "mavenext.release.version";
-    static final String MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR = "mavenext.check.snapshot-dep.failOnError";
-    static final String MAVENEXT_CHECK_SNAPSHOT_DEP = "mavenext.check.snapshot-dep";
+    static final String MAVENEXT_RELEASE_VERSION = "version.override";
+    static final String MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR = "version.override.fail-on-error";
+    static final String MAVENEXT_CHECK_SNAPSHOT_DEP = "version.override.check-snapshot-dependency";
 
     @Requirement
     private Logger logger;
@@ -54,11 +75,13 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
         GroupIdOfRootPom groupId = GroupIdOfRootPom.getInstance(currentGroupId, logger);
 
         if (currentGroupId.startsWith(groupId.groupId)) {
-            logger.info(String.format("changing version of  %s  to %s", model, version));
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("changing version of %s to %s", model, version));
+            }
             model.setVersion(version);
             Parent parent = model.getParent();
             if (parent != null && parent.getGroupId().startsWith(groupId.groupId)) {
-                logger.info(String.format("changing version of parent  %s  to %s", parent, version));
+                logger.debug(String.format("changing version of parent  %s  to %s", parent, version));
                 parent.setVersion(version);
             }
         }
@@ -78,6 +101,7 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
                     String errorMsg = String.format("there is a snapshot dependency (%s) in %s (%s)", dep, model, pomFilePath);
                     logger.error(errorMsg);
                     if (failOnError == Boolean.TRUE) {
+                        // wrap in a IOException as this one is thrown in the signature
                         throw new IOException(new MavenExecutionException(errorMsg, model.getPomFile()));
                     }
                 }
@@ -119,7 +143,7 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
     }
 
     /**
-     * helper class to store the very first groupid which is the base groupid for all following modules:
+     * helper class to store the very first groupId which is the base groupId for all following modules:
      * 
      * the modules version is changed if the test <code>if module.groupId starts with GroupIdOfRootPom.groupId</code> is true
      * 
@@ -136,7 +160,9 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
         public static GroupIdOfRootPom getInstance(String groupId, Logger logger) {
             if (INSTANCE == null) {
                 INSTANCE = new GroupIdOfRootPom(groupId);
-                logger.info(String.format("initialize groupId to '%s', the version of all modules starting with this groupdId will be changed!", groupId));
+                logger.info(String
+                                .format("initialize groupId to '%s', the version of all modules and dependencies starting with this groupdId will be changed!",
+                                                groupId));
             }
 
             return INSTANCE;
