@@ -21,6 +21,8 @@ import org.apache.maven.plugin.dependency.fromConfiguration.CopyMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 
+import java.util.List;
+
 /**
  * goal for download a list of artifacts and attach them for redeploying
  * with a new groupId, artifactId and version. See the properties on how
@@ -39,36 +41,48 @@ public class DeployDependencyMojo extends CopyMojo {
     private MavenProjectHelper projectHelper;
 
     /**
-     * if configured then the original artifact id is included in the classifier
+     * <p>attach with the dependencies' artifactId as classifier.
+     * Default is true</p>
+     * <p>If this flag is set to false but there are more than one artifacts in the list, then the flag is
+     *    set to true!
+     * </p>
      * 
      * @optional
-     * @parameter expression="${useOriginalArtifactIdInClassifier}"
-     *            default-value="false"
+     * @parameter expression="${artifactIdAsClassifier}"
+     *            default-value="true"
      */
-    private boolean useOriginalArtifactIdInClassifier;
+    private boolean artifactIdAsClassifier;
 
     /**
-     * if configured then the original classifier is included in the classifier
+     * preserve the dependencies' classifier if available.
+     * Default is true
      * 
      * @optional
-     * @parameter expression="${useOriginalClassifierInClassifier}"
-     *            default-value="false"
+     * @parameter expression="${preserveClassifier}"
+     *            default-value="true"
      */
-    private boolean useOriginalClassifierInClassifier;
+    private boolean preserveClassifier;
 
     @Override
     public void execute() throws MojoExecutionException {
         super.execute();
         MavenProject project = getProject();
 
+        if (!artifactIdAsClassifier) {
+            //set the flag to true to avoid that an artifacts gets overwritten
+            getLog().warn("your configuration of artifactIdAsClassifier is overriden and set to true " +
+                    "as there is more than one artifactItem configured");
+            artifactIdAsClassifier = hasMoreThanOneArtifacts(super.getArtifactItems());
+        }
+
         for (org.apache.maven.plugin.dependency.fromConfiguration.ArtifactItem each :  super.getArtifactItems()) {
 
             String newClassifier = "";
-            if (useOriginalArtifactIdInClassifier) {
+            if (artifactIdAsClassifier) {
                 newClassifier = each.getArtifact().getArtifactId();
             }
 
-            if (useOriginalClassifierInClassifier) {
+            if (preserveClassifier && each.getArtifact().getClassifier() != null) {
                 if (newClassifier.length() > 0) {
                     newClassifier += "-" + each.getArtifact().getClassifier();
                 } else {
@@ -78,5 +92,9 @@ public class DeployDependencyMojo extends CopyMojo {
 
             projectHelper.attachArtifact(project, each.getArtifact().getType(), newClassifier, each.getArtifact().getFile());
         }
+    }
+
+    private boolean hasMoreThanOneArtifacts(List<?> artifactsItems) {
+        return artifactsItems.size() > 1;
     }
 }
