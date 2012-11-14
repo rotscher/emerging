@@ -12,6 +12,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>dependency-deploy-plugin</module>
+        <module>dependency-attach-plugin</module>
     </modules>
 </project>

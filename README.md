@@ -23,7 +23,7 @@ Contains the following features
 For more information go to https://github.com/rotscher/emerging/wiki
 
 
-dependency-deploy-plugin (maven-plugin)
+dependency-attach-plugin (maven-plugin)
 ---------------------------------------
 
 Latest stable Release: not yet available
@@ -39,7 +39,7 @@ Example usage:
         <plugins>
             <plugin>
                 <groupId>ch.rotscher.maven.plugins</groupId>
-                <artifactId>dependency-deploy-plugin</artifactId>
+                <artifactId>dependency-attach-plugin</artifactId>
                 <version>0.1.0-SNAPSHOT</version>
                 <executions>
                     <execution>
