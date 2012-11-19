@@ -164,7 +164,6 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
         public static GroupIdOfRootPom getInstance(String groupId, Logger logger) {
             if (INSTANCE == null) {
                 INSTANCE = new GroupIdOfRootPom(groupId);
-                System.out.println("logger: " + logger);
                 logger.info(String
                         .format("initialize groupId to '%s', the version of all modules and dependencies starting with this groupdId will be changed!",
                                 groupId));
