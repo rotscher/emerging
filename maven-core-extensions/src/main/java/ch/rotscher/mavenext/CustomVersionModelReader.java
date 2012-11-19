@@ -30,6 +30,7 @@ import org.apache.maven.model.io.ModelReader;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.Logger;
+import org.codehaus.plexus.logging.console.ConsoleLogger;
 
 /**
  * <p>
@@ -61,7 +62,7 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
     static final String MAVENEXT_CHECK_SNAPSHOT_DEP = "version.override.check-snapshot-dependency";
 
     @Requirement
-    private Logger logger;
+    private Logger logger = new ConsoleLogger();
 
     @Override
     public Model read(InputStream input, Map<String, ?> options) throws IOException {
@@ -101,7 +102,7 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
                     }
                     String errorMsg = String.format("there is a snapshot dependency (%s) in %s (%s)", dep, model, pomFilePath);
                     if (failOnError == Boolean.TRUE) {
-                        logger.error(errorMsg);
+                        logger.warn(errorMsg);
                         // wrap in a IOException as this one is thrown in the signature
                         throw new IOException(new MavenExecutionException(errorMsg, model.getPomFile()));
                     } else {
@@ -163,9 +164,10 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
         public static GroupIdOfRootPom getInstance(String groupId, Logger logger) {
             if (INSTANCE == null) {
                 INSTANCE = new GroupIdOfRootPom(groupId);
+                System.out.println("logger: " + logger);
                 logger.info(String
-                                .format("initialize groupId to '%s', the version of all modules and dependencies starting with this groupdId will be changed!",
-                                                groupId));
+                        .format("initialize groupId to '%s', the version of all modules and dependencies starting with this groupdId will be changed!",
+                                groupId));
             }
 
             return INSTANCE;
