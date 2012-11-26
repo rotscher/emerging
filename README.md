@@ -1,35 +1,45 @@
 Emerging JAVA software
 ======================
 
-This repository contains emerging mingle-mangle java software, I personally use in a professional or private way as a software developer. Depending on how popular or how big a single project becomes a move to a different location is possible.
+This repository contains emerging mingle-mangle java software, I personally use in a professional or private way as a software developer.
 
 Project: maven-core-extensions
 ------------------------------
 
-Latest stable Release: not yet available
+Latest stable Release: 0.1.1 (November 2012)
 
-Latest SNAPSHOT: 0.1.0-SNAPSHOT
+Get it from maven-central: http://search.maven.org/#browse%7C1365347524
+
+
+Latest SNAPSHOT: 0.2.0-SNAPSHOT
+
 Get it from https://oss.sonatype.org/content/repositories/snapshots
 
+
 Install the jar in 
-    $M2_HOME/lib/ext
+    _$M2_HOME/lib/ext_
 
 Contains the following features
-* override ${project.version} on the fly
+* override _${project.version}_ on the fly
 
   to activate that feature execute: 
-      mvn clean install -Dversion.override=1.2.3-RC-5
+      _mvn clean install -Dversion.override=1.2.3-RC-5_
 
 For more information go to https://github.com/rotscher/emerging/wiki
 
 
-dependency-deploy-plugin (maven-plugin)
+dependency-attach-plugin (maven-plugin)
 ---------------------------------------
 
-Latest stable Release: not yet available
+Latest stable Release: 0.1.1 (November 2012)
 
-Latest SNAPSHOT: 0.1.0-SNAPSHOT
+http://search.maven.org/#browse%7C818638860
+
+
+Latest SNAPSHOT: 0.2.0-SNAPSHOT
+
 Get it from https://oss.sonatype.org/content/repositories/snapshots
+
 
 For more information go to https://github.com/rotscher/emerging/wiki
 
@@ -39,8 +49,8 @@ Example usage:
         <plugins>
             <plugin>
                 <groupId>ch.rotscher.maven.plugins</groupId>
-                <artifactId>dependency-deploy-plugin</artifactId>
-                <version>0.1.0-SNAPSHOT</version>
+                <artifactId>dependency-attach-plugin</artifactId>
+                <version>0.1.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -48,8 +58,8 @@ Example usage:
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <artifactIdAsClassifier>true</artifactIdAsClassifier>  <!--default is true -->
-                            <preserveClassifier>false</preserveClassifier>         <!--default is true -->
+                            <artifactIdAsClassifier>true</artifactIdAsClassifier>  <!--default: true -->
+                            <preserveClassifier>false</preserveClassifier>         <!--default: true -->
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>a.groupid</groupId>
