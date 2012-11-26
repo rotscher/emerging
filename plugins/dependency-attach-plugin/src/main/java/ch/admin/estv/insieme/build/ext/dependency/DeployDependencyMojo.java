@@ -68,12 +68,20 @@ public class DeployDependencyMojo extends CopyMojo {
         super.execute();
         MavenProject project = getProject();
 
-        if (!artifactIdAsClassifier) {
-            //set the flag to true to avoid that an artifacts gets overwritten
+        if (!artifactIdAsClassifier && hasMoreThanOneArtifacts(super.getArtifactItems())) {
+            //override the flag to true to avoid that an artifact gets ignored
             getLog().warn("your configuration of artifactIdAsClassifier is overriden and set to true " +
                     "as there is more than one artifactItem configured");
-            artifactIdAsClassifier = hasMoreThanOneArtifacts(super.getArtifactItems());
+            artifactIdAsClassifier = true;
         }
+
+        if (!preserveClassifier && hasMoreThanOneArtifacts(super.getArtifactItems())) {
+            //set the flag to true to avoid that an artifact gets ignored
+            getLog().warn("your configuration of preserveClassifier is overriden and set to true " +
+                    "as there is more than one artifactItem configured");
+            preserveClassifier = true;
+        }
+
 
         for (org.apache.maven.plugin.dependency.fromConfiguration.ArtifactItem each :  super.getArtifactItems()) {
 
