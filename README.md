@@ -18,6 +18,7 @@ Contains the following features
 * override _${project.version}_ on the fly  
     to activate that feature execute: _mvn clean install -Dversion.override=1.2.3-RC-5_
 
+Only works with Maven 3.0.3 or 3.0.4!
 For more information go to https://github.com/rotscher/emerging/wiki
 
 
