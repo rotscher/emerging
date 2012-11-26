@@ -6,24 +6,19 @@ This repository contains emerging mingle-mangle java software, I personally use 
 Project: maven-core-extensions
 ------------------------------
 
-Latest stable Release: 0.1.1 (November 2012)
-
+Latest stable Release: 0.1.1 (November 2012)  
 Get it from maven-central: http://search.maven.org/#browse%7C1365347524
 
-
-Latest SNAPSHOT: 0.2.0-SNAPSHOT
-
+Latest SNAPSHOT: 0.2.0-SNAPSHOT  
 Get it from https://oss.sonatype.org/content/repositories/snapshots
 
-
-Install the jar in 
+Install the jar in  
     _$M2_HOME/lib/ext_
 
 Contains the following features
 * override _${project.version}_ on the fly
-
-  to activate that feature execute: 
-      _mvn clean install -Dversion.override=1.2.3-RC-5_
+     to activate that feature execute: 
+     _mvn clean install -Dversion.override=1.2.3-RC-5_
 
 For more information go to https://github.com/rotscher/emerging/wiki
 
@@ -31,15 +26,11 @@ For more information go to https://github.com/rotscher/emerging/wiki
 dependency-attach-plugin (maven-plugin)
 ---------------------------------------
 
-Latest stable Release: 0.1.1 (November 2012)
+Latest stable Release: 0.1.1 (November 2012)  
+Get it from maven-central: http://search.maven.org/#browse%7C818638860
 
-http://search.maven.org/#browse%7C818638860
-
-
-Latest SNAPSHOT: 0.2.0-SNAPSHOT
-
+Latest SNAPSHOT: 0.2.0-SNAPSHOT  
 Get it from https://oss.sonatype.org/content/repositories/snapshots
-
 
 For more information go to https://github.com/rotscher/emerging/wiki
 
