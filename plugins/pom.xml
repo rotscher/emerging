@@ -13,6 +13,6 @@
 
     <modules>
         <module>dependency-attach-plugin</module>
-        <module>install-custom-version-plugin</module>
+        <module>install-version_override-plugin</module>
     </modules>
 </project>
