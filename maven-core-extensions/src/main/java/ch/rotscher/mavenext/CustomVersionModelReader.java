@@ -17,6 +17,7 @@ package ch.rotscher.mavenext;
  */
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -25,12 +26,15 @@ import org.apache.maven.MavenExecutionException;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
+import org.apache.maven.model.Plugin;
 import org.apache.maven.model.io.DefaultModelReader;
 import org.apache.maven.model.io.ModelReader;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.logging.console.ConsoleLogger;
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.IOUtil;
 
 /**
  * <p>
@@ -73,6 +77,15 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
             return model;
         }
 
+
+        if (model.getPomFile() != null) {
+            logger.info(String.format("rewrite pom file"));
+            String inputData = IOUtil.toString(new FileInputStream(model.getPomFile()));
+            String data = inputData.replace("<version>" + model.getVersion() + "</version>", "<version>"+ version +"</version>");
+            FileUtils.fileWrite("target/pom.xml", "UTF-8", data);
+            model.setPomFile(new File("target/pom.xml"));
+        }
+
         String currentGroupId = getGroupId(model);
         GroupIdOfRootPom groupId = GroupIdOfRootPom.getInstance(currentGroupId, logger);
 
@@ -81,6 +94,11 @@ public class CustomVersionModelReader extends DefaultModelReader implements Mode
                 logger.debug(String.format("changing version of %s to %s", model, version));
             }
             model.setVersion(version);
+            if (model.getBuild() != null && model.getBuild().getPluginManagement() != null) {
+                for (Plugin plugin : model.getBuild().getPluginManagement().getPlugins()) {
+                    logger.info(plugin.getArtifactId());
+                }
+            }
             Parent parent = model.getParent();
             if (parent != null && parent.getGroupId().startsWith(groupId.groupId)) {
                 logger.debug(String.format("changing version of parent  %s  to %s", parent, version));

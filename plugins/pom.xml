@@ -13,5 +13,6 @@
 
     <modules>
         <module>dependency-attach-plugin</module>
+        <module>install-custom-version-plugin</module>
     </modules>
 </project>
