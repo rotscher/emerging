@@ -1,4 +1,4 @@
-package ch.admin.estv.insieme.build.ext.dependency;
+package ch.rotscher.maven.plugins;
 
 /**
  * Copyright 2012 Roger Brechbühl
@@ -27,15 +27,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * goal for download a list of artifacts and attach them for redeploying with a new groupId, artifactId and version. See the properties on how the classifier
- * can be set.
+ * extending the original install mojo for the version.override feature
  * 
  * @extendsPlugin install
  * @extendsGoal install
  * @goal install
  * @author Roger Brechbuehl
  */
-public class DeployDependencyMojo
+public class InstallWithVersionOverrideMojo
         extends InstallMojo
 {
 
