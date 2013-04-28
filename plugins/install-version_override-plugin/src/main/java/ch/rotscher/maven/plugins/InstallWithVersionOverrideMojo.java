@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.installer.ArtifactInstallationException;
@@ -43,6 +42,8 @@ import org.jdom2.output.XMLOutputter;
 
 /**
  * extending the original install mojo for the version.override feature
+ * this class has been copied one to one from the original as the original class can
+ * not be extended.
  * 
  * @extendsPlugin install
  * @extendsGoal install
@@ -91,7 +92,8 @@ public class InstallWithVersionOverrideMojo
             return;
         }
 
-
+        
+        // in the following try catch block the extension
         try {
 
             String versionOverride = System.getProperty("version.override");
@@ -101,6 +103,8 @@ public class InstallWithVersionOverrideMojo
                 Document doc = builder.build(pomFile);
                 Element versionElem = findElement(doc.getRootElement().getChildren(), "version");
                 if (versionElem == null) {
+                	
+                	//version inherited from parent, so get it from there
                 	Element parentElem = findElement(doc.getRootElement().getChildren(), "parent");
                 	versionElem = findElement(parentElem.getChildren(), "version");
                 }
@@ -119,10 +123,10 @@ public class InstallWithVersionOverrideMojo
 
             }
 
-        } catch (IOException e1) {
-            getLog().warn(e1);
+        } catch (IOException e) {
+            getLog().warn(e);
         } catch (JDOMException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        	getLog().warn(e);
         }
 
 
