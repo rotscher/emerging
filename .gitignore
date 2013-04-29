@@ -5,6 +5,7 @@ target
 *.class
 .classpath
 *.iml
+.buildnumber
 
 # Package Files #
 *.jar

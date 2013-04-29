@@ -21,9 +21,9 @@ public class VersionOverrideModelReaderTest {
 
     @Before
     public void before() {
-        System.setProperty(VersionOverrideModelReader.MAVENEXT_RELEASE_VERSION, "");
-        System.setProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP, "");
-        System.setProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR, "");
+        System.clearProperty(VersionOverrideModelReader.MAVENEXT_RELEASE_VERSION);
+        System.clearProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP);
+        System.clearProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR);
     }
 
     @Test

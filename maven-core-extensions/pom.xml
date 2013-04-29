@@ -15,7 +15,7 @@
 	<name>maven-core-extensions</name>
 
 	<properties>
-		<install-plugin.version>0.2.0</install-plugin.version>
+		<install-plugin.version>0.2.0-SNAPSHOT</install-plugin.version>
 	</properties>
 	<build>
 		<resources>

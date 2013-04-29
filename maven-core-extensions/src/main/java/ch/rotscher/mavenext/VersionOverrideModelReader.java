@@ -18,10 +18,13 @@ package ch.rotscher.mavenext;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
@@ -33,8 +36,6 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.logging.console.ConsoleLogger;
-import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
 
 /**
  * <p>
@@ -64,7 +65,10 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
     static final String MAVENEXT_RELEASE_VERSION = "version.override";
     static final String MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR = "version.override.fail-on-error";
     static final String MAVENEXT_CHECK_SNAPSHOT_DEP = "version.override.check-snapshot-dependency";
+    static final String MAVENEXT_BUILDNUMBER_FILE = ".buildnumber";
 
+    private static RootPomData rootPomData = null;
+    
     @Requirement
     private Logger logger = new ConsoleLogger();
 
@@ -73,23 +77,18 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
         Model model = super.read(input, options);
         // this property is set from the command line with -Dversion.override
         String version = System.getProperty(MAVENEXT_RELEASE_VERSION);
-        if (version == null || version.trim().length() < 1) {
+        if (version == null) {
             return model;
         }
-
-
-        if (model.getPomFile() != null) {
-            logger.info(String.format("rewrite pom file"));
-            String inputData = IOUtil.toString(new FileInputStream(model.getPomFile()));
-            String data = inputData.replace("<version>" + model.getVersion() + "</version>", "<version>"+ version +"</version>");
-            FileUtils.fileWrite("target/pom.xml", "UTF-8", data);
-            model.setPomFile(new File("target/pom.xml"));
+        
+        String currentGroupId = getGroupId(model, logger);
+        if (rootPomData == null) {
+        	rootPomData = new RootPomData(model, version, logger);
         }
 
-        String currentGroupId = getGroupId(model);
-        GroupIdOfRootPom groupId = GroupIdOfRootPom.getInstance(currentGroupId, logger);
-
-        if (currentGroupId.startsWith(groupId.groupId)) {
+        version = rootPomData.version;
+        
+        if (currentGroupId.startsWith(rootPomData.groupId)) {
             if (logger.isDebugEnabled()) {
                 logger.debug(String.format("changing version of %s to %s", model, version));
             }
@@ -100,7 +99,7 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
                 }
             }
             Parent parent = model.getParent();
-            if (parent != null && parent.getGroupId().startsWith(groupId.groupId)) {
+            if (parent != null && parent.getGroupId().startsWith(rootPomData.groupId)) {
                 logger.debug(String.format("changing version of parent  %s  to %s", parent, version));
                 parent.setVersion(version);
             }
@@ -137,9 +136,10 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
      * get the groupId of the given model. if not set then ask the parent
      * 
      * @param model
+     * @param logger 
      * @return the groupId of the given module
      */
-    private String getGroupId(Model model) {
+    static String getGroupId(Model model, Logger logger) {
         if (model.getGroupId() != null) {
             return model.getGroupId();
         }
@@ -148,7 +148,7 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
             return model.getParent().getGroupId();
         }
 
-        // TODO: return null if no groupId can be found!
+        // TODO: return n/A if no groupId can be found!
         logger.warn(String.format(
                         "no groupId found for model %s (no clue why this happens :-(. But has no negative affect :-) Maybe this is the super pom!!??", model));
         return "n/A";
@@ -163,33 +163,83 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
     void setLogger(Logger logger) {
         this.logger = logger;
     }
-
+    
+    static void reset() {
+    	rootPomData = null;
+    }
+    
     /**
      * helper class to store the very first groupId which is the base groupId for all following modules:
      * 
      * the modules version is changed if the test <code>if module.groupId starts with GroupIdOfRootPom.groupId</code> is true
      * 
      */
-    static class GroupIdOfRootPom {
-        private static GroupIdOfRootPom INSTANCE;
+    static class RootPomData {
 
         private final String groupId;
+        private final String version;
+        private final Logger logger;
 
-        private GroupIdOfRootPom(String groupId) {
-            this.groupId = groupId;
-        }
-
-        public static GroupIdOfRootPom getInstance(String groupId, Logger logger) {
-            if (INSTANCE == null) {
-                INSTANCE = new GroupIdOfRootPom(groupId);
-                logger.info(String
-                        .format("initialize groupId to '%s', the version of all modules and dependencies starting with this groupdId will be changed!",
-                                groupId));
+        public RootPomData(Model model, String version, Logger logger) throws IOException {
+            this.logger = logger;
+            this.groupId = VersionOverrideModelReader.getGroupId(model, logger);
+            if (version.trim().length() < 1 || Boolean.valueOf(version)) {
+            	this.version = generateVersion(model);
+            	System.setProperty(MAVENEXT_RELEASE_VERSION, this.version);
+            } else {
+            	this.version = version;
             }
 
-            return INSTANCE;
-
+            logger.info(String
+                    .format("initialize groupId to '%s', the version of all modules and dependencies starting with this groupdId will be changed!",
+                            groupId));
         }
-    }
+
+        private String generateVersion(Model model) throws IOException {
+        	
+            	//generate a version based on the {project.version}
+            	String[] pomVersionTokens = model.getVersion().split("-");
+            	if (pomVersionTokens.length == 1) {
+            		return model.getVersion();
+            	}
+            	
+            	String buildNumber = "0";
+            	
+            	String jenkinsBuildNumber = System.getenv("BUILD_NUMBER");
+            	if (jenkinsBuildNumber != null) {
+            		buildNumber = jenkinsBuildNumber;
+            		logger.info(String
+                            .format("using buildnumber from jenkins: %s",
+                            		buildNumber));
+            	} else {
+	            	File buildNumberFile = new File(MAVENEXT_BUILDNUMBER_FILE);
+	            	if (buildNumberFile.exists()) {
+	    	        	List<String> lines = IOUtils.readLines(new FileInputStream(buildNumberFile));
+	    	
+	    	        	for (String line : lines) {
+	    	        		//could extend this implementation to ignore any comments starting with # or any other chars
+	    	        		buildNumber = line;
+	    	        	}
+	            	}
+    	        	int incrementedBuildNumber = Integer.parseInt(buildNumber) + 1;
+    	        	buildNumber = incrementedBuildNumber + "";
+                	FileOutputStream fos = new FileOutputStream(buildNumberFile);
+            		IOUtils.write(incrementedBuildNumber + "", fos);
+            		IOUtils.closeQuietly(fos);
+            		logger.info(String
+                            .format("using buildnumber from file .buildnumber: %s",
+                            		buildNumber));
+            	}
+            	
+            	String versionNumber = pomVersionTokens[0];
+            	String classifier = pomVersionTokens[1];
+            	if (classifier.equals("SNAPSHOT")) {
+            		//we shorten a little and avoid the literal 'SNAPSHOT'
+            		classifier = "S";
+            	}
+            	
+        		return String.format("%s-%s-%s", versionNumber, classifier, buildNumber);
+            }
+        }
 
 }

@@ -29,6 +29,7 @@ import org.apache.maven.artifact.installer.ArtifactInstallationException;
 import org.apache.maven.artifact.metadata.ArtifactMetadata;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.install.AbstractInstallMojo;
+import org.apache.maven.plugin.install.InstallMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -86,17 +87,18 @@ public class InstallWithVersionOverrideMojo
     public void execute()
             throws MojoExecutionException
     {
+
+    	//as the origi
         if ( skip )
         {
             getLog().info( "Skipping artifact installation" );
             return;
         }
 
-        
         // in the following try catch block the extension
         try {
 
-            String versionOverride = System.getProperty("version.override");
+        	String versionOverride = System.getProperty("version.override");
             if (versionOverride != null) {
                 getLog().info("changing version of pom file and save it to target/pom.xml");
                 SAXBuilder builder = new SAXBuilder();
