@@ -59,7 +59,7 @@ import org.codehaus.plexus.util.IOUtil;
  * 
  */
 @Component(role = ModelReader.class, hint = "custom-version-model-reader")
-public class CustomVersionModelReader extends DefaultModelReader implements ModelReader {
+public class VersionOverrideModelReader extends DefaultModelReader implements ModelReader {
 
     static final String MAVENEXT_RELEASE_VERSION = "version.override";
     static final String MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR = "version.override.fail-on-error";

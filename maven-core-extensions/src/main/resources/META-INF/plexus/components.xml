@@ -27,7 +27,7 @@
 			<!-- ... which is defined here! -->
 			<role>org.apache.maven.model.io.ModelReader</role>
 			<role-hint>custom-version-model-reader</role-hint>
-			<implementation>ch.rotscher.mavenext.CustomVersionModelReader
+			<implementation>ch.rotscher.mavenext.VersionOverrideModelReader
 			</implementation>
 			<description />
 			<isolated-realm>false</isolated-realm>

@@ -15,7 +15,7 @@
 	<name>maven-core-extensions</name>
 
 	<properties>
-		<install-plugin.version>2.4-SNAPSHOT</install-plugin.version>
+		<install-plugin.version>0.2.0</install-plugin.version>
 	</properties>
 	<build>
 		<resources>
@@ -80,5 +80,4 @@
 			<version>2.4</version>
 		</dependency>
 	</dependencies>
-	<version>3.0.5-SNAPSHOT</version>
 </project>

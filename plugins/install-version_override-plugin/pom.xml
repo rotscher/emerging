@@ -9,7 +9,6 @@
     </parent>
 
     <artifactId>install-version_override-plugin</artifactId>
-    <version>2.4-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>${project.artifactId}</name>
