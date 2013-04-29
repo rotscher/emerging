@@ -58,10 +58,17 @@ public class GeneratedVersionModelReaderTest {
 
         VersionOverrideModelReader customVersionModelReader = new VersionOverrideModelReader();
         customVersionModelReader.setLogger(new ConsoleLogger());
+        
+        String jenkinsBuildNumber = System.getenv("BUILD_NUMBER");
+        String buildNumber = "1";
+        if (jenkinsBuildNumber != null) {
+        	buildNumber = jenkinsBuildNumber;
+        }
+        
         try {
             Model model = customVersionModelReader.read(correctPomFile, new HashMap<String, Object>());
             assertNotNull(model);
-            assertEquals("0.0.1-S-1", model.getVersion());
+            assertEquals("0.0.1-S-"+ buildNumber, model.getVersion());
         } catch (IOException e) {
             fail(e.getMessage());
         }
