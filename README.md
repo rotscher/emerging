@@ -15,23 +15,19 @@ Get it from https://oss.sonatype.org/content/repositories/snapshots
 Install the jar in _$M2_HOME/lib/ext_
 
 Contains the following features
-* override _${project.version}_ on the fly  
-    to activate that feature execute: _mvn clean install -Dversion.override=1.2.3-RC-5_
-
-Only works with Maven 3.0.3 - 3.0.5!
-For more information go to https://github.com/rotscher/emerging/wiki
 
 Release 0.2.0 (planned for May 2013)
 - integrated a build number generation algorithm in the version.override feature
 
   :: _mvn clean install -Dversion.override=1.2.3-RC-5_                    
-         activate version override and provide a version                  builds with the given version
+         activate version override and provide a version
           
   :: _mvn clean install -Dversion.override_                               
-         just activate version override but don't provide a version       incremented buildnumber taken from .buildnumber
+         just activate version override but don't provide a version, incremented buildnumber taken from file .buildnumber (to be added to svn:ignore or .gitignore)
+         
          
   :: _mvn clean install -Dversion.override_ 
-         with env BUILD_NUMBER set (e.g. in Jenkins/Hudson)               buildnumber taken from $BUILD_NUMBER
+         with env BUILD_NUMBER set (e.g. in Jenkins/Hudson), buildnumber taken from $BUILD_NUMBER
   
   * version.override best works with version formats x.y.z-CLASSIFIER, e.g. 0.5.1-SNAPSHOT or 1.0-RC (delim in tokenizer: hyphen)       
   * Note that the literal "SNAPSHOT" is shorten to "S", e.g. 0.1.0-SNAPSHOT becomes 0.1.0-S-10
@@ -42,6 +38,16 @@ Release 0.2.0 (planned for May 2013)
   rewrites the original version in the pom which gets installed to the local maven repo  
   
   _ch.rotscher.maven.plugins:install-version_override-plugin:0.2.0-SNAPSHOT:install_ (not yet released, see in oss snapshot repo)
+
+Release 0.1.1 (November 2012)
+
+* override _${project.version}_ on the fly  
+    to activate that feature execute: _mvn clean install -Dversion.override=1.2.3-RC-5_
+
+
+Only works with Maven 3.0.3 - 3.0.5 (especially not with 3.0.2 or any previous versions)!
+Read this story about how all this stuff has been established: https://github.com/rotscher/emerging/wiki
+
 
 
 dependency-attach-plugin (maven-plugin)
