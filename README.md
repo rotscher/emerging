@@ -23,11 +23,12 @@ Release 0.2.0 (planned for May 2013)
          activate version override and provide a version
           
   :: _mvn clean install -Dversion.override_                               
-         just activate version override but don't provide a version, incremented buildnumber taken from file .buildnumber (to be added to svn:ignore or .gitignore)
+         just activate version override but don't provide a version, version is taken from pom.xml, incremented buildnumber taken from file _.buildnumber_
+         (to be added to svn:ignore or .gitignore)
          
          
   :: _mvn clean install -Dversion.override_ 
-         with env BUILD_NUMBER set (e.g. in Jenkins/Hudson), buildnumber taken from $BUILD_NUMBER
+         with env BUILD_NUMBER set (e.g. in Jenkins/Hudson), version is taken from pom.xml, buildnumber taken from $BUILD_NUMBER
   
   * version.override best works with version formats x.y.z-CLASSIFIER, e.g. 0.5.1-SNAPSHOT or 1.0-RC (delim in tokenizer: hyphen)       
   * Note that the literal "SNAPSHOT" is shorten to "S", e.g. 0.1.0-SNAPSHOT becomes 0.1.0-S-10
@@ -44,11 +45,8 @@ Release 0.1.1 (November 2012)
 * override _${project.version}_ on the fly  
     to activate that feature execute: _mvn clean install -Dversion.override=1.2.3-RC-5_
 
-
 Only works with Maven 3.0.3 - 3.0.5 (especially not with 3.0.2 or any previous versions)!
 Read this story about how all this stuff has been established: https://github.com/rotscher/emerging/wiki
-
-
 
 dependency-attach-plugin (maven-plugin)
 ---------------------------------------
