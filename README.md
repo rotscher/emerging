@@ -21,12 +21,15 @@ Contains the following features
 Only works with Maven 3.0.3 - 3.0.5!
 For more information go to https://github.com/rotscher/emerging/wiki
 
-Release 0.2.0 (May 2013)
+Release 0.2.0 (planned for May 2013)
 - integrated a build number generation algorithm in the version.override feature
+
   :: _mvn clean install -Dversion.override=1.2.3-RC-5_                    
-         activate version override and provide a version                  builds with the given version 
+         activate version override and provide a version                  builds with the given version
+          
   :: _mvn clean install -Dversion.override_                               
          just activate version override but don't provide a version       incremented buildnumber taken from .buildnumber
+         
   :: _mvn clean install -Dversion.override_ 
          with env BUILD_NUMBER set (e.g. in Jenkins/Hudson)               buildnumber taken from $BUILD_NUMBER
   
@@ -38,7 +41,7 @@ Release 0.2.0 (May 2013)
 - in case the version is overridden a special install plugin is executed which
   rewrites the original version in the pom which gets installed to the local maven repo  
   
-  ch.rotscher.maven.plugins:install-version_override-plugin:0.2.0-SNAPSHOT:install (not yet released, see in oss snapshot repo)
+  _ch.rotscher.maven.plugins:install-version_override-plugin:0.2.0-SNAPSHOT:install_ (not yet released, see in oss snapshot repo)
 
 
 dependency-attach-plugin (maven-plugin)
