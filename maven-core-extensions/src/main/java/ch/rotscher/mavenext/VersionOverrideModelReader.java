@@ -168,6 +168,11 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
     	rootPomData = null;
     }
     
+    public static boolean isVersionOverridden() {
+    	String version = System.getProperty(VersionOverrideModelReader.MAVENEXT_RELEASE_VERSION);
+    	return version != null;
+    }
+    
     /**
      * helper class to store the very first groupId which is the base groupId for all following modules:
      * 
@@ -212,6 +217,7 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
                             .format("using buildnumber from jenkins: %s",
                             		buildNumber));
             	} else {
+            		//read from buildnumber file
 	            	File buildNumberFile = new File(MAVENEXT_BUILDNUMBER_FILE);
 	            	if (buildNumberFile.exists()) {
 	    	        	List<String> lines = IOUtils.readLines(new FileInputStream(buildNumberFile));

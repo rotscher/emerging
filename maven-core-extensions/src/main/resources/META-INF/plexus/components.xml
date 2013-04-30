@@ -38,7 +38,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>pom</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -47,7 +47,7 @@
 
 						<phases>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -61,7 +61,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>jar</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -88,7 +88,7 @@
 								org.apache.maven.plugins:maven-jar-plugin:2.3.2:jar
 							</package>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -102,7 +102,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>ejb</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -129,7 +129,7 @@
 								org.apache.maven.plugins:maven-ejb-plugin:2.3:ejb
 							</package>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -143,7 +143,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>ejb3</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -170,7 +170,7 @@
 								org.apache.maven.plugins:maven-ejb3-plugin:ejb3
 							</package>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -184,7 +184,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>maven-plugin</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -215,7 +215,7 @@
 								org.apache.maven.plugins:maven-plugin-plugin:2.9:addPluginArtifactMetadata
 							</package>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -229,7 +229,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>war</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -256,7 +256,7 @@
 								org.apache.maven.plugins:maven-war-plugin:2.1.1:war
 							</package>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -270,7 +270,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>ear</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -288,7 +288,7 @@
 								org.apache.maven.plugins:maven-ear-plugin:2.6:ear
 							</package>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -302,7 +302,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>rar</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -329,7 +329,7 @@
 								org.apache.maven.plugins:maven-rar-plugin:2.2:rar
 							</package>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -343,7 +343,7 @@
 		<component>
 			<role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
 			<role-hint>par</role-hint>
-			<implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+			<implementation>ch.rotscher.mavenext.VersionOverrideLifecycleMapping
 			</implementation>
 			<configuration>
 				<lifecycles>
@@ -370,7 +370,7 @@
 								org.apache.maven.plugins:maven-par-plugin:par
 							</package>
 							<install>
-								ch.rotscher.maven.plugins:install-version_override-plugin:${install-plugin.version}:install
+								org.apache.maven.plugins:maven-install-plugin:2.4:install
 							</install>
 							<deploy>
 								org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy

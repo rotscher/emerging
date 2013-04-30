@@ -29,7 +29,6 @@ import org.apache.maven.artifact.installer.ArtifactInstallationException;
 import org.apache.maven.artifact.metadata.ArtifactMetadata;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.install.AbstractInstallMojo;
-import org.apache.maven.plugin.install.InstallMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -88,7 +87,6 @@ public class InstallWithVersionOverrideMojo
             throws MojoExecutionException
     {
 
-    	//as the origi
         if ( skip )
         {
             getLog().info( "Skipping artifact installation" );
