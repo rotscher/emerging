@@ -63,6 +63,7 @@ import org.codehaus.plexus.logging.console.ConsoleLogger;
 public class VersionOverrideModelReader extends DefaultModelReader implements ModelReader {
 
     static final String MAVENEXT_RELEASE_VERSION = "version.override";
+    static final String MAVENEXT_BE_STRICT = "version.override.strict";
     static final String MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR = "version.override.fail-on-error";
     static final String MAVENEXT_CHECK_SNAPSHOT_DEP = "version.override.check-snapshot-dependency";
     static final String MAVENEXT_BUILDNUMBER_FILE = ".buildnumber";
@@ -88,20 +89,32 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
 
         version = rootPomData.version;
         
-        if (currentGroupId.startsWith(rootPomData.groupId)) {
-            if (logger.isDebugEnabled()) {
-                logger.debug(String.format("changing version of %s to %s", model, version));
-            }
-            model.setVersion(version);
-            if (model.getBuild() != null && model.getBuild().getPluginManagement() != null) {
-                for (Plugin plugin : model.getBuild().getPluginManagement().getPlugins()) {
-                    logger.info(plugin.getArtifactId());
-                }
-            }
-            Parent parent = model.getParent();
-            if (parent != null && parent.getGroupId().startsWith(rootPomData.groupId)) {
-                logger.debug(String.format("changing version of parent  %s  to %s", parent, version));
-                parent.setVersion(version);
+        Boolean beStrict = Boolean.parseBoolean(System.getProperty(MAVENEXT_BE_STRICT));
+        
+        //either the groupId is equals or 
+        //e.g. the version is overridden here: ch.rotscher.app and ch.rotscher.app.domain 
+        // vs. not overridden in that case:    ch.rotscher.app and ch.rotscher.application
+        if (currentGroupId.equals(rootPomData.groupId) || currentGroupId.startsWith(rootPomData.groupId + ".")) {
+            
+            if (beStrict && !model.getVersion().equals(rootPomData.originalVersion)) {
+            	if (logger.isDebugEnabled()) {
+            		logger.debug(String.format("version of %s (%s) not changed as it differ: %s", model, model.getVersion(), rootPomData.version));
+            	}
+            } else {
+            	model.setVersion(version);
+            	if (logger.isDebugEnabled()) {
+                    logger.debug(String.format("changing version of %s to %s", model, version));
+                }	
+//            if (model.getBuild() != null && model.getBuild().getPluginManagement() != null) {
+//                for (Plugin plugin : model.getBuild().getPluginManagement().getPlugins()) {
+//                    logger.info(plugin.getArtifactId());
+//                }
+//            }
+	            Parent parent = model.getParent();
+	            if (parent != null && (parent.getGroupId().equals(rootPomData.groupId) || parent.getGroupId().startsWith(rootPomData.groupId + "."))) {
+	                logger.debug(String.format("changing version of parent  %s  to %s", parent, version));
+	                parent.setVersion(version);
+	            }
             }
         }
 
@@ -181,12 +194,14 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
      */
     static class RootPomData {
 
+    	private final String originalVersion;
         private final String groupId;
         private final String version;
         private final Logger logger;
 
         public RootPomData(Model model, String version, Logger logger) throws IOException {
             this.logger = logger;
+            this.originalVersion = model.getVersion();
             this.groupId = VersionOverrideModelReader.getGroupId(model, logger);
             if (version.trim().length() < 1 || Boolean.valueOf(version)) {
             	this.version = generateVersion(model);

@@ -15,6 +15,7 @@ import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.codehaus.plexus.logging.console.ConsoleLogger;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class VersionOverrideModelReaderTest {
@@ -133,7 +134,7 @@ public class VersionOverrideModelReaderTest {
             fail(e.getMessage());
         }
     }
-
+    
     /**
      * return
      * 
