@@ -29,7 +29,6 @@ import org.apache.maven.MavenExecutionException;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
-import org.apache.maven.model.Plugin;
 import org.apache.maven.model.io.DefaultModelReader;
 import org.apache.maven.model.io.ModelReader;
 import org.codehaus.plexus.component.annotations.Component;
@@ -46,6 +45,7 @@ import org.codehaus.plexus.logging.console.ConsoleLogger;
  * <br />
  * other options are:<br />
  * <code>-Dversion.override.fail-on-error=[true | false]</code><br />
+ * <code>-Dversion.override.strict=[true | false]</code><br />
  * <code>-Dversion.override.check-snapshot-dependency=[true | false]</code><br />
  * </p>
  * <p>
@@ -105,11 +105,6 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
             	if (logger.isDebugEnabled()) {
                     logger.debug(String.format("changing version of %s to %s", model, version));
                 }	
-//            if (model.getBuild() != null && model.getBuild().getPluginManagement() != null) {
-//                for (Plugin plugin : model.getBuild().getPluginManagement().getPlugins()) {
-//                    logger.info(plugin.getArtifactId());
-//                }
-//            }
 	            Parent parent = model.getParent();
 	            if (parent != null && (parent.getGroupId().equals(rootPomData.groupId) || parent.getGroupId().startsWith(rootPomData.groupId + "."))) {
 	                logger.debug(String.format("changing version of parent  %s  to %s", parent, version));
