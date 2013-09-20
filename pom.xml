@@ -58,6 +58,12 @@
                         <keyname>5B21C801</keyname>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <mavenExecutorId>forked-path</mavenExecutorId>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
