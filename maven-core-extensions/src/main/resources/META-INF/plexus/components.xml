@@ -59,7 +59,7 @@
                 org.apache.maven.plugins:maven-war-plugin:2.2:war
               </package>
               <install>
-                  ch.rotscher.maven.plugins:install-custom-version-plugin:0.2.0-SNAPSHOT:install
+                  ch.rotscher.maven.plugins:install-custom-version-plugin:0.2.1-SNAPSHOT:install
               </install>
               <deploy>
                 org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
