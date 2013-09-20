@@ -9,7 +9,7 @@
 
     <groupId>ch.rotscher</groupId>
     <artifactId>emerging</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <url>http://www.rotscher.ch/dev</url>
@@ -28,11 +28,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <modules>
-        <module>maven-core-extensions</module>
-        <module>plugins</module>
-    </modules>
 
     <build>
         <pluginManagement>
