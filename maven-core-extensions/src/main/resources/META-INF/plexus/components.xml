@@ -30,7 +30,7 @@
             <description/>
             <isolated-realm>false</isolated-realm>
         </component>
-      <component>
+      <!--<component>
       <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
       <role-hint>war</role-hint>
       <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
@@ -59,7 +59,7 @@
                 org.apache.maven.plugins:maven-war-plugin:2.2:war
               </package>
               <install>
-                  ch.rotscher.maven.plugins:install-custom-version-plugin:0.2.1-SNAPSHOT:install
+                  ch.rotscher.maven.plugins:install-custom-version-plugin:0.3.0:install
               </install>
               <deploy>
                 org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
@@ -69,6 +69,6 @@
           </lifecycle>
         </lifecycles>
       </configuration>
-    </component>
+    </component>-->
     </components>
 </component-set>
