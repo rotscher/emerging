@@ -157,8 +157,6 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
         }
 
         // TODO: return n/A if no groupId can be found!
-        logger.warn(String.format(
-                        "no groupId found for model %s (no clue why this happens :-(. But has no negative affect :-) Maybe this is the super pom!!??", model));
         return "n/A";
     }
 

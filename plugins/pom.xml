@@ -4,7 +4,7 @@
     <parent>
         <groupId>ch.rotscher</groupId>
         <artifactId>emerging</artifactId>
-        <version>0.2.0</version>
+        <version>0.3.1-SNAPSHOT</version>
     </parent>
 
     <groupId>ch.rotscher.maven.plugins</groupId>
@@ -12,7 +12,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>dependency-attach-plugin</module>
-        <module>install-version_override-plugin</module>
+        <module>install-custom-version-plugin</module>
     </modules>
 </project>

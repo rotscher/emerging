@@ -9,7 +9,7 @@
 
     <groupId>ch.rotscher</groupId>
     <artifactId>emerging</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <url>http://www.rotscher.ch/dev</url>
@@ -30,8 +30,8 @@
     </properties>
 
     <modules>
-        <module>maven-core-extensions</module>
         <module>plugins</module>
+        <module>maven-core-extensions</module>
     </modules>
 
     <build>
@@ -46,42 +46,27 @@
                         <target>1.6</target>
                     </configuration>
                 </plugin>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                 <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.1</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                     <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.ops4j</groupId>
-                                        <artifactId>maven-inherit-plugin</artifactId>
-                                        <versionRange>[1.1,)</versionRange>
-                                        <goals>
-                                            <goal>inherit</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
-                                </pluginExecution>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.codehaus.plexus</groupId>
-						                <artifactId>plexus-component-metadata</artifactId>
-                                        <versionRange>[1.5.5,)</versionRange>
-                                        <goals>
-                                            <goal>generate-metadata</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
+                        <keyname>5B21C801</keyname>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <mavenExecutorId>forked-path</mavenExecutorId>
                     </configuration>
                 </plugin>
             </plugins>
