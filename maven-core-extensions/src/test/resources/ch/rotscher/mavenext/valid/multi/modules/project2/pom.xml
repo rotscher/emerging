@@ -16,5 +16,23 @@
             <artifactId>project1</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+        	<!-- the version of this dependency should not be overridden!!! -->
+            <groupId>test-groupext</groupId>
+            <artifactId>depWithDifferentGroupId</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+        	<!-- the version of this dependency should be overridden!!! -->
+            <groupId>test-group</groupId>
+            <artifactId>depWithSameGroupId</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+        	<!-- the version of this dependency should be overridden!!! -->
+            <groupId>test-group.subgroup</groupId>
+            <artifactId>depWithSameSubGroupId</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

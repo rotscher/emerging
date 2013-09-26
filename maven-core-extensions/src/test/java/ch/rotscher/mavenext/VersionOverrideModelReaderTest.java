@@ -15,23 +15,24 @@ import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.codehaus.plexus.logging.console.ConsoleLogger;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-public class CustomVersionModelReaderTest {
+public class VersionOverrideModelReaderTest {
 
     @Before
     public void before() {
-        System.setProperty(CustomVersionModelReader.MAVENEXT_RELEASE_VERSION, "");
-        System.setProperty(CustomVersionModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP, "");
-        System.setProperty(CustomVersionModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR, "");
+        System.clearProperty(VersionOverrideModelReader.MAVENEXT_RELEASE_VERSION);
+        System.clearProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP);
+        System.clearProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR);
     }
 
     @Test
     public void testValidSinglePom() {
 
-        InputStream correctPomFile = CustomVersionModelReaderTest.class.getResourceAsStream("valid/single/pom.xml");
+        InputStream correctPomFile = VersionOverrideModelReaderTest.class.getResourceAsStream("valid/single/pom.xml");
 
-        CustomVersionModelReader customVersionModelReader = new CustomVersionModelReader();
+        VersionOverrideModelReader customVersionModelReader = new VersionOverrideModelReader();
         customVersionModelReader.setLogger(new ConsoleLogger());
         try {
             Model model = customVersionModelReader.read(correctPomFile, new HashMap<String, Object>());
@@ -45,12 +46,12 @@ public class CustomVersionModelReaderTest {
     @Test
     public void testFailingSnapshotDep() {
 
-        System.setProperty(CustomVersionModelReader.MAVENEXT_RELEASE_VERSION, "1.2.3");
-        System.setProperty(CustomVersionModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP, "TrUe");
-        System.setProperty(CustomVersionModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR, "TrUe");
-        InputStream correctPomFile = CustomVersionModelReaderTest.class.getResourceAsStream("valid/single/pom.xml");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_RELEASE_VERSION, "1.2.3");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP, "TrUe");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR, "TrUe");
+        InputStream correctPomFile = VersionOverrideModelReaderTest.class.getResourceAsStream("valid/single/pom.xml");
 
-        CustomVersionModelReader customVersionModelReader = new CustomVersionModelReader();
+        VersionOverrideModelReader customVersionModelReader = new VersionOverrideModelReader();
         customVersionModelReader.setLogger(new ConsoleLogger());
         try {
             customVersionModelReader.read(correctPomFile, new HashMap<String, Object>());
@@ -67,9 +68,9 @@ public class CustomVersionModelReaderTest {
     @Test
     public void testValidMultiModulePom() {
 
-        InputStream correctPomFile = CustomVersionModelReaderTest.class.getResourceAsStream("valid/multi/modules/pom.xml");
+        InputStream correctPomFile = VersionOverrideModelReaderTest.class.getResourceAsStream("valid/multi/modules/pom.xml");
 
-        CustomVersionModelReader customVersionModelReader = new CustomVersionModelReader();
+        VersionOverrideModelReader customVersionModelReader = new VersionOverrideModelReader();
         customVersionModelReader.setLogger(new ConsoleLogger());
         try {
             Model model = customVersionModelReader.read(correctPomFile, new HashMap<String, Object>());
@@ -83,10 +84,10 @@ public class CustomVersionModelReaderTest {
     @Test
     public void testValidMultiModulePomWithOverriddenVersion() {
 
-        System.setProperty(CustomVersionModelReader.MAVENEXT_RELEASE_VERSION, "1.2.3");
-        InputStream correctPomFile = CustomVersionModelReaderTest.class.getResourceAsStream("valid/multi/modules/project2/pom.xml");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_RELEASE_VERSION, "1.2.3");
+        InputStream correctPomFile = VersionOverrideModelReaderTest.class.getResourceAsStream("valid/multi/modules/project2/pom.xml");
 
-        CustomVersionModelReader customVersionModelReader = new CustomVersionModelReader();
+        VersionOverrideModelReader customVersionModelReader = new VersionOverrideModelReader();
         customVersionModelReader.setLogger(new ConsoleLogger());
         try {
             Model model = customVersionModelReader.read(correctPomFile, new HashMap<String, Object>());
@@ -99,12 +100,12 @@ public class CustomVersionModelReaderTest {
 
     @Test
     public void testNonFailingSnapshotDep() {
-        System.setProperty(CustomVersionModelReader.MAVENEXT_RELEASE_VERSION, "1.2.3");
-        System.setProperty(CustomVersionModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP, "TrUe");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_RELEASE_VERSION, "1.2.3");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP, "TrUe");
         // CustomVersionModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR, is false by default!!
-        InputStream correctPomFile = CustomVersionModelReaderTest.class.getResourceAsStream("valid/single/pom.xml");
+        InputStream correctPomFile = VersionOverrideModelReaderTest.class.getResourceAsStream("valid/single/pom.xml");
 
-        CustomVersionModelReader customVersionModelReader = new CustomVersionModelReader();
+        VersionOverrideModelReader customVersionModelReader = new VersionOverrideModelReader();
         customVersionModelReader.setLogger(new ConsoleLogger());
         try {
             Model model = customVersionModelReader.read(correctPomFile, new HashMap<String, Object>());
@@ -118,12 +119,12 @@ public class CustomVersionModelReaderTest {
 
     @Test
     public void testNoSnapshotDep() {
-        System.setProperty(CustomVersionModelReader.MAVENEXT_RELEASE_VERSION, "1.2.3");
-        System.setProperty(CustomVersionModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP, "TrUe");
-        System.setProperty(CustomVersionModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR, "TrUe");
-        InputStream correctPomFile = CustomVersionModelReaderTest.class.getResourceAsStream("no-snapshot-dep/pom.xml");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_RELEASE_VERSION, "1.2.3");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP, "TrUe");
+        System.setProperty(VersionOverrideModelReader.MAVENEXT_CHECK_SNAPSHOT_DEP_FAIL_ON_ERROR, "TrUe");
+        InputStream correctPomFile = VersionOverrideModelReaderTest.class.getResourceAsStream("no-snapshot-dep/pom.xml");
 
-        CustomVersionModelReader customVersionModelReader = new CustomVersionModelReader();
+        VersionOverrideModelReader customVersionModelReader = new VersionOverrideModelReader();
         customVersionModelReader.setLogger(new ConsoleLogger());
         try {
             Model model = customVersionModelReader.read(correctPomFile, new HashMap<String, Object>());
@@ -133,7 +134,7 @@ public class CustomVersionModelReaderTest {
             fail(e.getMessage());
         }
     }
-
+    
     /**
      * return
      * 

@@ -33,6 +33,7 @@
         <module>plugins</module>
         <module>maven-core-extensions</module>
     </modules>
+
     <build>
         <pluginManagement>
             <plugins>
