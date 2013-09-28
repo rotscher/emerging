@@ -16,7 +16,10 @@ Get it from maven-central: http://search.maven.org/#search|ga|1|ch.rotscher
 
 Contains the following features
 
-Release 0.3.x  
+Release 0.3.2
+- removed dependecy to commons-io (this must not be installed anymore)
+
+Release 0.3.1  
 - install-custom-version-plugin for replacing the overridden version in the pom.xml which gets installed  into the local and deployed to the remote repository
 
 this release has been tested with  
