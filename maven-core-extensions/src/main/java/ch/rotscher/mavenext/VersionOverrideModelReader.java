@@ -75,7 +75,7 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
             return model;
         }
 
-        String currentGroupId = getGroupId(model, logger);
+        String currentGroupId = getGroupId(model);
         if (rootPomData == null) {
             rootPomData = new RootPomData(model, version, logger);
         }
@@ -136,11 +136,10 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
     /**
      * get the groupId of the given model. if not set then ask the parent
      *
-     * @param model
-     * @param logger
+     * @param model the maven model
      * @return the groupId of the given module
      */
-    static String getGroupId(Model model, Logger logger) {
+    static String getGroupId(Model model) {
         if (model.getGroupId() != null) {
             return model.getGroupId();
         }
@@ -149,7 +148,6 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
             return model.getParent().getGroupId();
         }
 
-        // TODO: return n/A if no groupId can be found!
         return "n/A";
     }
 
@@ -186,7 +184,7 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
         public RootPomData(Model model, String version, Logger logger) throws IOException {
             this.logger = logger;
             this.originalVersion = model.getVersion();
-            this.groupId = VersionOverrideModelReader.getGroupId(model, logger);
+            this.groupId = VersionOverrideModelReader.getGroupId(model);
             if (version.trim().length() < 1 || Boolean.valueOf(version)) {
                 this.version = generateVersion(model);
                 System.setProperty(MAVENEXT_RELEASE_VERSION, this.version);
