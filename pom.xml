@@ -73,6 +73,50 @@
         </pluginManagement>
     </build>
 
+    <profiles>
+        <profile>
+            <id>version.override</id>
+            <activation>
+                <property>
+                    <name>version.override</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- deactivate the default install plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-install-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>default-install</id>
+                                    <phase>none</phase>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <!-- configure the custom install plugin for lightweight release builds -->
+                    <plugin>
+                        <groupId>ch.rotscher.maven.plugins</groupId>
+                        <artifactId>install-custom-version-plugin</artifactId>
+                        <version>0.3.1</version>
+                        <executions>
+                            <execution>
+                                <id>custom-install</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>install</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <developers>
         <developer>

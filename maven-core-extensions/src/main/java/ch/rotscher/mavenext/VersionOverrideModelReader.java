@@ -16,7 +16,6 @@ package ch.rotscher.mavenext;
  * limitations under the License.
  */
 
-import org.apache.commons.io.IOUtils;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
@@ -29,7 +28,6 @@ import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.logging.console.ConsoleLogger;
 
 import java.io.*;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -221,18 +219,11 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
                 //read from buildnumber file
                 File buildNumberFile = new File(MAVENEXT_BUILDNUMBER_FILE);
                 if (buildNumberFile.exists()) {
-                    List<String> lines = IOUtils.readLines(new FileInputStream(buildNumberFile));
-
-                    for (String line : lines) {
-                        //could extend this implementation to ignore any comments starting with # or any other chars
-                        buildNumber = line;
-                    }
+                    buildNumber = readFirstLine(buildNumberFile);
                 }
                 int incrementedBuildNumber = Integer.parseInt(buildNumber) + 1;
                 buildNumber = incrementedBuildNumber + "";
-                FileOutputStream fos = new FileOutputStream(buildNumberFile);
-                IOUtils.write(incrementedBuildNumber + "", fos);
-                IOUtils.closeQuietly(fos);
+                writeLine(incrementedBuildNumber + "", buildNumberFile);
                 logger.info(String
                         .format("using buildnumber from file .buildnumber: %s",
                                 buildNumber));
@@ -247,6 +238,38 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
 
             return String.format("%s-%s-%s", versionNumber, classifier, buildNumber);
         }
+
+        private String readFirstLine(File file) throws IOException {
+
+            BufferedReader br = null;
+
+            try {
+                br = new BufferedReader(new FileReader(file));
+                return br.readLine();
+            } finally {
+                if (br != null)
+                    br.close();
+            }
+        }
+
+        private void writeLine(String line, File file) throws IOException {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+
+            FileOutputStream fos = new FileOutputStream(file);
+
+            // get the content in bytes
+            byte[] contentInBytes = line.getBytes();
+
+            fos.write(contentInBytes);
+            fos.flush();
+            fos.close();
+        }
+
     }
+
+
 
 }
