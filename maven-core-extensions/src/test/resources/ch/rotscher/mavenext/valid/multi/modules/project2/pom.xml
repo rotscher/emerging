@@ -2,35 +2,44 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>test-group</groupId>
+        <groupId>a.b.c</groupId>
         <artifactId>modules</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>project2</artifactId>
     <packaging>jar</packaging>
-
+	<properties>
+		<dep.version>1.8</dep.version>
+	</properties>
     <dependencies>
         <dependency>
-            <groupId>multi</groupId>
-            <artifactId>project1</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
         	<!-- the version of this dependency should not be overridden!!! -->
-            <groupId>test-groupext</groupId>
+            <groupId>a.b.cd</groupId>
             <artifactId>depWithDifferentGroupId</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
+        	<!-- the version of this dependency should not be overridden!!! -->
+            <groupId>a.b.c</groupId>
+            <artifactId>depWithSameGroupIdButDifferentVersion</artifactId>
+            <version>${dep.version}</version>
+        </dependency>        
+        <dependency>
         	<!-- the version of this dependency should be overridden!!! -->
-            <groupId>test-group</groupId>
+            <groupId>a.b.c</groupId>
             <artifactId>depWithSameGroupId</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
         	<!-- the version of this dependency should be overridden!!! -->
-            <groupId>test-group.subgroup</groupId>
+            <groupId>a.b.c</groupId>
+            <artifactId>anotherDepWithSameGroupId</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+        	<!-- the version of this dependency should be overridden!!! -->
+            <groupId>a.b.c.d</groupId>
             <artifactId>depWithSameSubGroupId</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
