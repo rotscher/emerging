@@ -88,8 +88,8 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
         //e.g. the version is overridden here: ch.rotscher.app and ch.rotscher.app.domain 
         // vs. not overridden in that case:    ch.rotscher.app and ch.rotscher.application
         if (currentGroupId.equals(rootPomData.groupId) || currentGroupId.startsWith(rootPomData.groupId + ".")) {
-
-            if (beStrict && !model.getVersion().equals(rootPomData.originalVersion)) {
+        	String modelVersion = getVersion(model);
+            if (beStrict && !modelVersion.equals(rootPomData.originalVersion)) {
                 if (logger.isDebugEnabled()) {
                     logger.debug(String.format("version of %s (%s) not changed as it differ: %s", model, model.getVersion(), rootPomData.version));
                 }
@@ -131,6 +131,10 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
         }
 
         return model;
+    }
+    
+    private String getVersion(Model model) {
+    	return model.getVersion() == null ? model.getParent().getVersion() : model.getVersion();
     }
 
     /**
