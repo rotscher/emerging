@@ -1,7 +1,7 @@
 Emerging JAVA software
 ======================
 
-This repository contains emerging mingle-mangle java software, I personally use in a professional or private way as a software developer.
+This repository contains emerging mingle-mangle java software, I personally use as a software engineer.
 
 Project: lightweight release builds
 -----------------------------------
@@ -9,12 +9,39 @@ Project: lightweight release builds
 The motivation for all this is written down here: http://diplingfh.blogspot.ch/2013/02/how-has-our-release-process-matured.html
 
 Latest stable Release: 0.3.x (September 2013)  
+
+Installation
+------------
 Get it from maven-central: http://search.maven.org/#search|ga|1|ch.rotscher
 
 - Install the maven-core-extensions.jar in _$M2_HOME/lib/ext_
 - Configure the install-custom-version-plugin in your pom (see below)
 
-Contains the following features
+Usage
+-----
+
+  :: _mvn clean install -Dversion.override=1.2.3-RC-5_                    
+         activate version override and provide a version
+          
+  :: _mvn clean install -Dversion.override_                               
+         just activate version override but don't provide a version, version is taken from pom.xml, incremented buildnumber taken from file _.buildnumber_
+         (to be added to svn:ignore or .gitignore)
+         
+  :: _mvn clean install -Dversion.override_ 
+         with env BUILD_NUMBER set (e.g. in Jenkins/Hudson), version is taken from pom.xml, buildnumber taken from $BUILD_NUMBER
+
+  :: _mvn clean install -Dversion.override -Dversion.override.strict=true_ 
+         the option "version.override.strict" only overrides versions of modules which is equals to the root module (avoids version overriding of modules not in the same reactor but having the same groupId)
+  
+  * version.override best works with version formats x.y.z-CLASSIFIER, e.g. 0.5.1-SNAPSHOT or 1.0-RC (delim in tokenizer: hyphen)       
+  * Note that the literal "SNAPSHOT" is shorten to "S", e.g. 0.1.0-SNAPSHOT becomes 0.1.0-S-10
+  * Classifiers like "RC" or "beta" are not changed just the buildnumber is appended
+  * If there is no classifier like "RC" or "beta", no buildnumber is appended
+  * IMPORTANT: specify the version of internal dependencies with ${project.version}!
+
+
+Release 0.3.3
+- fix for strict option (-Dversion.override.strict)
 
 Release 0.3.2
 - removed dependecy to commons-io (this must not be installed anymore)
@@ -30,22 +57,6 @@ All other version are not supported!
 
 Release 0.2.x  
 - integrated a build number generation algorithm in the version.override feature
-
-  :: _mvn clean install -Dversion.override=1.2.3-RC-5_                    
-         activate version override and provide a version
-          
-  :: _mvn clean install -Dversion.override_                               
-         just activate version override but don't provide a version, version is taken from pom.xml, incremented buildnumber taken from file _.buildnumber_
-         (to be added to svn:ignore or .gitignore)
-         
-  :: _mvn clean install -Dversion.override_ 
-         with env BUILD_NUMBER set (e.g. in Jenkins/Hudson), version is taken from pom.xml, buildnumber taken from $BUILD_NUMBER
-  
-  * version.override best works with version formats x.y.z-CLASSIFIER, e.g. 0.5.1-SNAPSHOT or 1.0-RC (delim in tokenizer: hyphen)       
-  * Note that the literal "SNAPSHOT" is shorten to "S", e.g. 0.1.0-SNAPSHOT becomes 0.1.0-S-10
-  * Classifiers like "RC" or "beta" are not changed just the buildnumber is appended
-  * If there is no classifier like "RC" or "beta", no buildnumber is appended
-  * IMPORTANT: specify the version of internal dependencies with ${project.version}!
 
 Release 0.1.1 (November 2012)
 

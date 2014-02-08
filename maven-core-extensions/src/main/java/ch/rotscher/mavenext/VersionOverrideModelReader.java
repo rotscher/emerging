@@ -84,8 +84,7 @@ public class VersionOverrideModelReader extends DefaultModelReader implements Mo
 
         Boolean beStrict = Boolean.parseBoolean(System.getProperty(MAVENEXT_BE_STRICT));
 
-        //either the groupId is equals or 
-        //e.g. the version is overridden here: ch.rotscher.app and ch.rotscher.app.domain 
+        //the version is overridden here:      ch.rotscher.app and ch.rotscher.app.domain 
         // vs. not overridden in that case:    ch.rotscher.app and ch.rotscher.application
         if (currentGroupId.equals(rootPomData.groupId) || currentGroupId.startsWith(rootPomData.groupId + ".")) {
         	String modelVersion = getVersion(model);
