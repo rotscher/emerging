@@ -32,6 +32,7 @@
     <modules>
         <module>plugins</module>
         <module>maven-core-extensions</module>
+        <module>maven-hom</module>
     </modules>
 
     <build>
