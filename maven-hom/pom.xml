@@ -9,9 +9,30 @@
 
     <groupId>ch.rotscher.maven</groupId>
     <artifactId>maven-hom</artifactId>
-    <packaging>jar</packaging>
+    <packaging>maven-plugin</packaging>
 
     <name>maven hom</name>
 
     <description>hom = human object model</description>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.2</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>  
 </project>
