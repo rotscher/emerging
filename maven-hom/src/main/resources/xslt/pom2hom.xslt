@@ -5,15 +5,14 @@
     <xsl:output omit-xml-declaration="yes" />
 
 
-    <xsl:template match="h:plugin">
-        <xsl:element name="plugin">
-            <xsl:attribute name="groupId"><xsl:value-of select="h:groupId" /></xsl:attribute>
-            <xsl:attribute name="artifactId"><xsl:value-of select="h:artifactId" /></xsl:attribute>
-            <xsl:attribute name="version"><xsl:value-of select="h:version" /></xsl:attribute>
-                <xsl:apply-templates select="h:executions | h:configuration" />
-                <xsl:apply-templates select="h:configurations" />
-        </xsl:element>
-    </xsl:template>
+<!--     <xsl:template match="h:plugin"> -->
+<!--         <xsl:element name="plugin"> -->
+<!--             <xsl:attribute name="groupId"><xsl:value-of select="h:groupId" /></xsl:attribute> -->
+<!--             <xsl:attribute name="artifactId"><xsl:value-of select="h:artifactId" /></xsl:attribute> -->
+<!--             <xsl:attribute name="version"><xsl:value-of select="h:version" /></xsl:attribute> -->
+<!--             <xsl:apply-templates select="h:executions | h:configuration" /> -->
+<!--         </xsl:element> -->
+<!--     </xsl:template> -->
 
     <xsl:template match="h:dependency">
         <xsl:element name="dependency">
