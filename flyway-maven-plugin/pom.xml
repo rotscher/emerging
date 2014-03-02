@@ -11,7 +11,11 @@
 
     <artifactId>flyway-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-
+    <properties>
+        <url>jdbc:mysql://localhost:3306/flyway</url>
+        <user>flyway</user>
+        <password>flyway</password>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -65,7 +69,6 @@
                     <locations>
                         <location>filesystem:src/main/resources/sql-migrations</location>
                     </locations>
-                    <outOfOrder>true</outOfOrder>
                 </configuration>
                 <dependencies>
                     <dependency>
