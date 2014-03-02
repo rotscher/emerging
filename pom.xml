@@ -32,6 +32,8 @@
     <modules>
         <module>plugins</module>
         <module>maven-core-extensions</module>
+        <module>flyway-repeatable</module>
+        <module>flyway-maven-plugin</module>
     </modules>
 
     <build>
@@ -42,8 +44,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
                         <encoding>UTF-8</encoding>
-                        <source>1.6</source>
-                        <target>1.6</target>
+                        <source>1.7</source>
+                        <target>1.7</target>
                     </configuration>
                 </plugin>
                 <plugin>
