@@ -32,9 +32,7 @@
     <modules>
         <module>plugins</module>
         <module>maven-core-extensions</module>
-        <module>flyway-repeatable</module>
-        <module>flyway-maven-plugin</module>
-        <module>flyway-commandline</module>
+        <module>flyway-extension</module>
     </modules>
 
     <build>

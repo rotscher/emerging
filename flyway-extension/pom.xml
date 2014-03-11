@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>emerging</artifactId>
+        <groupId>ch.rotscher</groupId>
+        <version>0.3.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>flyway-extension</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>flyway-repeatable</module>
+        <module>flyway-commandline</module>
+        <module>flyway-maven-plugin</module>
+        <module>flyway-repeatable-tests</module>
+    </modules>
+
+</project>

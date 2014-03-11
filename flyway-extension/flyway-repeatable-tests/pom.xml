@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>ch.rotscher</groupId>
+        <artifactId>flyway-extension</artifactId>
+        <version>0.3.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>flyway-repeatable-tests</artifactId>
+    <packaging>pom</packaging>
+    <properties>
+        <url>jdbc:mysql://localhost:3306/flyway</url>
+        <user>flyway</user>
+        <password>flyway</password>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>flyway-repeatable</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>0-SNAPSHOT</version>
+            <type>maven-plugin</type>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.2.8</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>migrate-custom</goal>
+                            <!--<goal>info</goal>-->
+                        </goals>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <url>jdbc:mysql://localhost:3306/flyway</url>
+                    <user>flyway</user>
+                    <password>flyway</password>
+                    <schemas>
+                        <schema>flyway</schema>
+                    </schemas>
+                    <table>schema_history</table>
+                    <locations>
+                        <location>filesystem:src/main/resources/sql-migrations</location>
+                    </locations>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.29</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+
+    </build>
+
+</project>
