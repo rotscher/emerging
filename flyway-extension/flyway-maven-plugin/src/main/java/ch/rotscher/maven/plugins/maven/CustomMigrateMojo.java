@@ -16,7 +16,7 @@ import java.util.List;
  * Created by rotscher on 01.03.14.
  * @extendsPlugin flyway-maven-plugin
  * @extendsGoal migrate
-* @goal migrate
+* @goal custom-migrate
  */
 public class CustomMigrateMojo extends MigrateMojo {
 

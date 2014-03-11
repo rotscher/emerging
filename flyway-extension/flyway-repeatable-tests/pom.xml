@@ -44,7 +44,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>migrate-custom</goal>
+                            <goal>migrate</goal>
                             <!--<goal>info</goal>-->
                         </goals>
                         <phase>test</phase>
