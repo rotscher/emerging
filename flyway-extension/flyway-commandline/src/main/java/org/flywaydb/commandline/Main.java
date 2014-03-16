@@ -15,25 +15,18 @@
  */
 package org.flywaydb.commandline;
 
-import ch.rotscher.flyway.core.RepeatableMigrationResolver2;
+import ch.rotscher.flyway.core.RepeatableFlyway;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.FlywayException;
-import org.flywaydb.core.api.resolver.MigrationResolver;
-import org.flywaydb.core.dbsupport.DbSupport;
-import org.flywaydb.core.dbsupport.DbSupportFactory;
 import org.flywaydb.core.info.MigrationInfoDumper;
 import org.flywaydb.core.util.*;
 import org.flywaydb.core.util.logging.Log;
 import org.flywaydb.core.util.logging.LogFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -43,6 +36,7 @@ import java.util.Properties;
  */
 public class Main {
     private static Log LOG;
+    private static RepeatableFlyway repeatableFlyway;
 
     /**
      * Initializes the logging.
@@ -81,19 +75,8 @@ public class Main {
 
             Flyway flyway = new Flyway();
             flyway.configure(properties);
-            String sql = "DELETE FROM " + flyway.getTable()
-                    + " WHERE " + DbSupportFactory.createDbSupport(flyway.getDataSource().getConnection(), false).quote("type") + "='CUSTOM'";
+            repeatableFlyway = new RepeatableFlyway(flyway, properties);
 
-            flyway.setDataSource(properties.getProperty("flyway.url"), properties.getProperty("flyway.user"), properties.getProperty("flyway.password"), sql);
-
-            DbSupport dbSupport = DbSupportFactory.createDbSupport(flyway.getDataSource().getConnection(), false);
-            List<MigrationResolver> migrationResolvers = new ArrayList<>();
-            for (String locationDescriptor : flyway.getLocations()) {
-                migrationResolvers.add(new RepeatableMigrationResolver2(flyway, "R", new Location(locationDescriptor), dbSupport));
-            }
-
-
-            flyway.setCustomMigrationResolvers(migrationResolvers.toArray(new MigrationResolver[0]));
             int consoleWidth = PropertiesUtils.getIntProperty(properties, "flyway.consoleWidth", 80);
 
             for (String operation : operations) {
@@ -123,17 +106,20 @@ public class Main {
      * @param operation    The operation to execute.
      * @param consoleWidth The width of the console (in chars).
      */
-    private static void executeOperation(Flyway flyway, String operation, int consoleWidth) {
+    private static void executeOperation(Flyway flyway, String operation, int consoleWidth) throws SQLException {
         if ("clean".equals(operation)) {
             flyway.clean();
         } else if ("init".equals(operation)) {
             flyway.init();
         } else if ("migrate".equals(operation)) {
+            repeatableFlyway.preMigrate();
             flyway.migrate();
         } else if ("validate".equals(operation)) {
             flyway.validate();
         } else if ("info".equals(operation)) {
+            repeatableFlyway.preInfo();
             LOG.info("\n" + MigrationInfoDumper.dumpToAsciiTable(flyway.info().all(), consoleWidth));
+            repeatableFlyway.postInfo();
         } else if ("repair".equals(operation)) {
             flyway.repair();
         } else {

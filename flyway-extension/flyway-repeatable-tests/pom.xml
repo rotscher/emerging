@@ -29,9 +29,20 @@
             <type>maven-plugin</type>
         </dependency>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>flyway-commandline</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -44,7 +55,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>migrate</goal>
+                            <!--<goal>migrate</goal>-->
                             <!--<goal>info</goal>-->
                         </goals>
                         <phase>test</phase>
