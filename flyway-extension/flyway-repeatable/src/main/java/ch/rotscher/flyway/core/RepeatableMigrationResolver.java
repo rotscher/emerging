@@ -14,14 +14,14 @@ import java.util.Collection;
 /**
  * Created by rotscher on 01.03.14.
  */
-public class RepeatableMigrationResolver2 implements MigrationResolver {
+public class RepeatableMigrationResolver implements MigrationResolver {
 
     private Flyway flyway;
     private final String prefix;
     private Location location;
     private DbSupport dbSupport;
 
-    public RepeatableMigrationResolver2(Flyway flyway, String prefix, Location location, DbSupport dbSupport) {
+    public RepeatableMigrationResolver(Flyway flyway, String prefix, Location location, DbSupport dbSupport) {
         this.prefix = prefix;
         this.location = location;
         this.flyway = flyway;

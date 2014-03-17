@@ -36,7 +36,7 @@ public class RepeatableFlyway {
         DbSupport dbSupport = DbSupportFactory.createDbSupport(flyway.getDataSource().getConnection(), false);
         List<MigrationResolver> migrationResolvers = new ArrayList<>();
         for (String locationDescriptor : flyway.getLocations()) {
-            migrationResolvers.add(new RepeatableMigrationResolver2(flyway, "R", new Location(locationDescriptor), dbSupport));
+            migrationResolvers.add(new RepeatableMigrationResolver(flyway, "R", new Location(locationDescriptor), dbSupport));
         }
 
         flyway.setCustomMigrationResolvers(migrationResolvers.toArray(new MigrationResolver[0]));
@@ -57,7 +57,7 @@ public class RepeatableFlyway {
 
         List<MigrationResolver> migrationResolvers = new ArrayList<>();
         for (String locationDescriptor : flyway.getLocations()) {
-            migrationResolvers.add(new RepeatableMigrationResolver2(flyway, "R", new Location(locationDescriptor), dbSupport));
+            migrationResolvers.add(new RepeatableMigrationResolver(flyway, "R", new Location(locationDescriptor), dbSupport));
         }
 
         flyway.setCustomMigrationResolvers(migrationResolvers.toArray(new MigrationResolver[0]));
