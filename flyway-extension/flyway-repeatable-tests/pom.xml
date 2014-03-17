@@ -57,6 +57,7 @@
                         <goals>
                             <!--<goal>migrate</goal>-->
                             <!--<goal>info</goal>-->
+                            <goal>validate</goal>
                         </goals>
                         <phase>test</phase>
                     </execution>

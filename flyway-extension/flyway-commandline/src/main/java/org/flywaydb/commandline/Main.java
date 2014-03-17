@@ -115,7 +115,9 @@ public class Main {
             repeatableFlyway.preMigrate();
             flyway.migrate();
         } else if ("validate".equals(operation)) {
+            repeatableFlyway.preInfo();
             flyway.validate();
+            repeatableFlyway.postInfo();
         } else if ("info".equals(operation)) {
             repeatableFlyway.preInfo();
             LOG.info("\n" + MigrationInfoDumper.dumpToAsciiTable(flyway.info().all(), consoleWidth));
