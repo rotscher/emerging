@@ -5,6 +5,7 @@ import org.flywaydb.core.api.MigrationType;
 import org.flywaydb.core.api.resolver.MigrationResolver;
 import org.flywaydb.core.api.resolver.ResolvedMigration;
 import org.flywaydb.core.dbsupport.DbSupport;
+import org.flywaydb.core.resolver.ResolvedMigrationImpl;
 import org.flywaydb.core.resolver.sql.SqlMigrationResolver;
 import org.flywaydb.core.util.Location;
 import org.flywaydb.core.util.PlaceholderReplacer;
@@ -32,12 +33,12 @@ public class RepeatableMigrationResolver implements MigrationResolver {
     @Override
     public Collection<ResolvedMigration> resolveMigrations() {
 
-        SqlMigrationResolver delegate = new SqlMigrationResolver(getDbSupport(), null, getLocation(), getPlaceholderReplacer(), getEncoding(), getSqlMigrationPrefix(), getSqlMigrationSuffix()) {
-            protected MigrationType getMigrationType() {
-                return MigrationType.CUSTOM;
-            }
-        };
-        return delegate.resolveMigrations();
+        SqlMigrationResolver delegate = new SqlMigrationResolver(getDbSupport(), null, getLocation(), getPlaceholderReplacer(), getEncoding(), getSqlMigrationPrefix(), getSqlMigrationSuffix());
+        Collection<ResolvedMigration> resolvedMigrations = delegate.resolveMigrations();
+        for (ResolvedMigration migration : resolvedMigrations) {
+            ((ResolvedMigrationImpl) migration).setType(MigrationType.CUSTOM);
+        }
+        return resolvedMigrations;
 
     }
 
