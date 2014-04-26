@@ -33,6 +33,8 @@
         <module>plugins</module>
         <module>maven-core-extensions</module>
         <module>flyway-extension</module>
+        <module>budget</module>
+        <module>budget-web</module>
     </modules>
 
     <build>

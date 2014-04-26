@@ -1,0 +1,30 @@
+[
+   {
+      "name":"Ferien",
+      "amount":"575.15",
+      "salary":"300",
+      "fix":"300",
+      "projectedAmount":"0"
+   },
+   {
+      "name":"Haushalt",
+      "amount":"375.88",
+      "salary":"1400",
+      "fix":"1400",
+      "projectedAmount":"0"
+   },
+   {
+      "name":"Steuern",
+      "amount":"4875.15",
+      "salary":"650",
+      "fix":"850",
+      "projectedAmount":"-1800"
+   },
+   {
+      "name":"Zug",
+      "amount":"1200.15",
+      "salary":"160",
+      "fix":"1400",
+      "projectedAmount":"600"
+   }
+]

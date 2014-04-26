@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8" ng-controller="AccountListCtrl">
+            <h1>Budget</h1>
+            <table width="100%">
+                <tr>
+                    <th>Konto</th>
+                    <th>Betrag</th>
+                    <th>Verteilung</th>
+                    <th>Ende Periode</th>
+                </tr>
+
+                <tr ng-repeat="account in accounts">
+                    <td>{{account.name}}</td>
+                    <td>{{account.amount}}</td>
+                    <td>{{account.salary}}</td>
+                    <td>{{account.projectedAmount}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#newStatement">
+                    Buchung erfassen
+                </button>
+                <button class="btn btn-primary btn-lg">
+                    Konti aktualisieren
+                </button>
+                <button class="btn btn-primary btn-lg">
+                    Lohn verbuchen
+                </button>
+
+        </div>
+        <div class="modal fade" id="newStatement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Buchung erfassen</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="http://localhost:8080/p4/rest/client/save" method="POST">
+                            <label for="date">Datum</label>
+                            <input id="date" type="text" class="form-control" name="date">
+
+                            <label for="account">Konto</label>
+                            <input id="account" type="text" class="form-control" name="account">
+
+                            <label for="amount">Betrag</label>
+                            <input id="amount" type="date" class="form-control" name="amount">
+
+                            <label for="description">Beschreibung</label>
+                            <input id="description" type="date" class="form-control" name="description">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-6" ng-controller="CurrentStatementListCtrl">
+            <h2>Letzte Buchungen</h2>
+            <table width="100%">
+                <tr>
+                    <th>Reihenfolge</th>
+                    <th>Datum</th>
+                    <th>Konto</th>
+                    <th>Betrag</th>
+                    <th>Beschreibung</th>
+                    <th>verbucht</th>
+                </tr>
+                <tr ng-repeat="stmt in currentStmt">
+                    <td>
+                        <a href><span class="glyphicon glyphicon-upload"></span></a>
+                        <a href><span class="glyphicon glyphicon-download"></span></a>
+                    </td>
+                    <td>{{stmt.bookingDate}}</td>
+                    <td>{{stmt.account}}</td>
+                    <td>{{stmt.amount}}</td>
+                    <td>{{stmt.description}}</td>
+                    <td><a href><span class="{{stmt.balanced}}"></span></a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6" ng-controller="ArchivedStatementListCtrl">
+            <h2>Nächste Buchungen</h2>
+            <table width="100%">
+                <tr>
+                    <th>Datum</th>
+                    <th>Konto</th>
+                    <th>Betrag</th>
+                    <th>Beschreibung</th>
+                </tr>
+                <tr ng-repeat="stmt in archivedStmt">
+                    <td>{{stmt.bookingDate}}</td>
+                    <td>{{stmt.account}}</td>
+                    <td>{{stmt.amount}}</td>
+                    <td>{{stmt.description}}</td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+</div>

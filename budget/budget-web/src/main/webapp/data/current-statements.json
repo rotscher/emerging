@@ -1,0 +1,30 @@
+[
+   {
+      "bookingDate":"5.1.2014",
+      "account":"Haushalt",
+      "amount":"-69.15",
+      "description":"Einkäufe Migros",
+      "balanced":"glyphicon glyphicon-question-sign"
+   },
+   {
+      "bookingDate":"5.1.2014",
+      "account":"Haushalt",
+      "amount":"-69.15",
+      "description":"Einkäufe Migros",
+      "balanced":"glyphicon glyphicon-ok-sign"
+   },
+   {
+      "bookingDate":"5.1.2014",
+      "account":"Haushalt",
+      "amount":"-69.15",
+      "description":"Einkäufe Migros",
+      "balanced":"glyphicon glyphicon-question-sign"
+   },
+   {
+      "bookingDate":"5.1.2014",
+      "account":"Haushalt",
+      "amount":"-69.15",
+      "description":"Einkäufe Migros",
+      "balanced":"glyphicon glyphicon-ok-sign"
+   }
+]

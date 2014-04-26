@@ -1,0 +1,30 @@
+[
+   {
+      "bookingDate":"31.12.2013",
+      "account":"Zug",
+      "amount":"-4.40",
+      "description":"Tickets Bern",
+      "balanced":"ja"
+   },
+   {
+      "bookingDate":"23.1.2014",
+      "account":"Haushalt",
+      "amount":"-35.15",
+      "description":"Weihnachtsbaum",
+      "balanced":"ja"
+   },
+   {
+      "bookingDate":"4.1.2014",
+      "account":"Haushalt",
+      "amount":"-69.15",
+      "description":"Einkäufe Migros",
+      "balanced":"ja"
+   },
+   {
+      "bookingDate":"3.1.2014",
+      "account":"Haushalt",
+      "amount":"-69.15",
+      "description":"Einkäufe Migros",
+      "balanced":"ja"
+   }
+]
