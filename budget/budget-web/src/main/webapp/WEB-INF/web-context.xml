@@ -24,13 +24,4 @@
     <context:component-scan base-package="ch.rotscher" />
 
     <mvc:annotation-driven />
-    <!-- REST Connection to Neo4j server -->
-    <bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
-        <constructor-arg value="http://localhost:7474/db/data/" />
-    </bean>
-
-            <!-- Neo4j configuration (creates Neo4jTemplate) -->
-   <!-- <neo4j:config graphDatabaseService="restGraphDatabase" />-->
-    <neo4j:config  graphDatabaseService="graphDatabaseService"/>
-    <neo4j:repositories base-package="ch.rotscher.p4"/>
 </beans>
