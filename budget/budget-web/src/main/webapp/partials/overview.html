@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container" ng-controller="CurrentStatementListCtrl">
     <div class="row">
-        <div class="col-md-8" ng-controller="AccountListCtrl">
-            <h1>Budget</h1>
+        <div class="col-md-8">
+            <h1>Budget {{data.balanceSheet.year}}</h1>
             <table width="100%">
                 <tr>
                     <th>Konto</th>
@@ -10,7 +10,7 @@
                     <th>Ende Periode</th>
                 </tr>
 
-                <tr ng-repeat="account in accounts">
+                <tr ng-repeat="account in data.balanceSheet.accounts">
                     <td>{{account.name}}</td>
                     <td>{{account.amount}}</td>
                     <td>{{account.salary}}</td>
@@ -30,6 +30,7 @@
                 <button class="btn btn-primary btn-lg">
                     Lohn verbuchen
                 </button>
+                <a href="http://localhost:8080/budget-web/rest/admin/accounts/create">create accounts</a>
 
         </div>
         <div class="modal fade" id="newStatement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -64,7 +65,7 @@
     </div>
     <!-- Example row of columns -->
     <div class="row">
-        <div class="col-md-6" ng-controller="CurrentStatementListCtrl">
+        <div class="col-md-6">
             <h2>Letzte Buchungen</h2>
             <table width="100%">
                 <tr>
@@ -75,7 +76,7 @@
                     <th>Beschreibung</th>
                     <th>verbucht</th>
                 </tr>
-                <tr ng-repeat="stmt in currentStmt">
+                <tr ng-repeat="stmt in data.statements">
                     <td>
                         <a href><span class="glyphicon glyphicon-upload"></span></a>
                         <a href><span class="glyphicon glyphicon-download"></span></a>
@@ -84,7 +85,9 @@
                     <td>{{stmt.account}}</td>
                     <td>{{stmt.amount}}</td>
                     <td>{{stmt.description}}</td>
-                    <td><a href="http://localhost:8080/budget-web/rest/statement/{{stmt.id}}/balance?isBalanced={{stmt.balanced}}">{{stmt.balanced}}</a></td>
+                    <td><a ng-click="balance(stmt)">{{stmt.balanced}}</a>
+                    
+                    <a href="http://localhost:8080/budget-web/rest/statement/{{stmt.id}}/balance?isBalanced={{stmt.balanced}}">{{stmt.balanced}}</a></td>
                 </tr>
             </table>
         </div>

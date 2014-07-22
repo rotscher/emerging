@@ -1,20 +1,10 @@
 package ch.rotscher.budget.model;
 
-public class Account {
 
-	private String name;
+public class Account extends AccountTemplate {
+
 	private double amount;
-	private double salary;
-	private double fixExpense;
-	private double projectedAmount;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	private double performanceAmount;
 
 	public double getAmount() {
 		return amount;
@@ -24,38 +14,11 @@ public class Account {
 		this.amount = amount;
 	}
 
-	public double getSalary() {
-		return salary;
+	public double getPerformanceAmount() {
+		return performanceAmount;
 	}
 
-	public void setSalary(double salary) {
-		this.salary = salary;
-	}
-
-	public double getFixExpense() {
-		return fixExpense;
-	}
-
-	public void setFixExpense(double fixExpense) {
-		this.fixExpense = fixExpense;
-	}
-
-	public double getProjectedAmount() {
-		return projectedAmount;
-	}
-
-	public void setProjectedAmount(double projectedAmount) {
-		this.projectedAmount = projectedAmount;
-	}
-	
-	public Account clone() {
-		Account clone = new Account();
-		clone.setName(getName());
-		clone.setAmount(getAmount());
-		clone.setFixExpense(getFixExpense());
-		clone.setProjectedAmount(getProjectedAmount());
-		clone.setSalary(getSalary());
-		
-		return clone;
+	public void setPerformanceAmount(double performanceAmount) {
+		this.performanceAmount = performanceAmount;
 	}
 }

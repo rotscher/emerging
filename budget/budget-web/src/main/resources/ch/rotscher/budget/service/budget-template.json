@@ -1,0 +1,37 @@
+[
+   {
+      "name":"Ferien",
+      "amount":"575.15",
+      "salary":"300",
+      "fixExpense":"300",
+      "projectedAmount":"0"
+   },
+   {
+      "name":"Miete",
+      "amount":"2275.15",
+      "salary":"2200",
+      "fixExpense":"1956",
+      "projectedAmount":"0"
+   },
+   {
+      "name":"Haushalt",
+      "amount":"375.88",
+      "salary":"1400",
+      "fixExpense":"1400",
+      "projectedAmount":"0"
+   },
+   {
+      "name":"Steuern",
+      "amount":"4875.15",
+      "salary":"650",
+      "fixExpense":"850",
+      "projectedAmount":"-1800"
+   },
+   {
+      "name":"Zug",
+      "amount":"1200.15",
+      "salary":"160",
+      "fixExpense":"1400",
+      "projectedAmount":"600"
+   }
+]

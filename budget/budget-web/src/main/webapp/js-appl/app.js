@@ -1,6 +1,7 @@
 var budgetApp = angular.module('budgetApp', [
                                             'ngRoute',
-                                            'budgetControllers'
+                                            'budgetControllers',
+                                            'budgetServices'
                                             ]);
 
 budgetApp.config(['$routeProvider',
@@ -8,7 +9,7 @@ function($routeProvider) {
 $routeProvider.
 when('/overview', {
 templateUrl: 'partials/overview.html',
-controller: 'AccountListCtrl'
+controller: 'CurrentStatementListCtrl'
 }).
 when('/phones/:phoneId', {
 templateUrl: 'partials/phone-detail.html',

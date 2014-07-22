@@ -20,7 +20,7 @@ public class StatementService {
 	}
 	
 	public void balanceStatement(int statementId, boolean isBalanced) {
-		if (isBalanced) {
+		if (!isBalanced) {
 			statementRepository.unbalanceStatement(statementId);
 		} else {
 			statementRepository.balanceStatement(statementId);
