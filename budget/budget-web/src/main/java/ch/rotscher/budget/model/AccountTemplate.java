@@ -39,8 +39,8 @@ public class AccountTemplate {
 		return targetAmount;
 	}
 
-	public void setTargetAmount(double projectedAmount) {
-		this.targetAmount = projectedAmount;
+	public void setTargetAmount(double targetAmount) {
+		this.targetAmount = targetAmount;
 	}
 	
 	public AccountTemplate clone() {
@@ -59,6 +59,7 @@ public class AccountTemplate {
 		account.setAmount(0);
 		account.setFixExpense(getFixExpense());
 		account.setPerformanceAmount(0);
+		account.setTargetAmount(getTargetAmount());
 		account.setSalary(getSalary());
 		return account;
 	}

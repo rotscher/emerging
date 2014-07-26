@@ -23,7 +23,7 @@ public class StatementRepository {
 		stmt1.setBookingDate(new Date());
 		stmt1.setBalanced(true);
 		stmt1.setDescription("Miete Mai 2014");
-		currentStatements.add(stmt1);
+		//currentStatements.add(stmt1);
 		
 		Statement stmt2 = new Statement();
 		stmt2.setAccount("Miete");
@@ -31,7 +31,7 @@ public class StatementRepository {
 		stmt2.setBookingDate(new Date());
 		stmt2.setBalanced(false);
 		stmt2.setDescription("Parkplatz Mai 2014");
-		currentStatements.add(stmt2);
+		//currentStatements.add(stmt2);
 	}
 	
 	public List<Statement> getCurrentStatements() {

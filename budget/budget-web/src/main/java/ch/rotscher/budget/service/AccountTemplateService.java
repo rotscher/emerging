@@ -24,7 +24,7 @@ public class AccountTemplateService {
 	
 	public void createAccounts() throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		InputStream stream = getClass().getResourceAsStream("budget-template.json");
+		InputStream stream = getClass().getResourceAsStream("account-template.json");
 		List<AccountTemplate> accounts = mapper.readValue(stream, new TypeReference<List<AccountTemplate>>() {
 			
 		});
