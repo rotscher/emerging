@@ -7,9 +7,14 @@ budgetControllers.controller('CurrentStatementListCtrl', ['$scope', 'AccountServ
 	$scope.data = AccountService.data;
 	
 	//balance is inverting the current value
-	$scope.balance = function(data1) {
-		data1.balanced = !data1.balanced;
-		AccountService.saveStatement(data1);
+	$scope.balance = function(data) {
+		data.balanced = !data.balanced;
+		AccountService.saveStatement(data);
+	};
+	
+	$scope.saveStatement = function(stmt) {
+		alert(stmt.amount);
+		AccountService.saveStatement(stmt);
 	};
 }]);
 

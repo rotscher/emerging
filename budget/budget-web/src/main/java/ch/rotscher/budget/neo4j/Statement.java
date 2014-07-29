@@ -1,12 +1,14 @@
-package ch.rotscher.budget.model;
+package ch.rotscher.budget.neo4j;
 
 import java.util.Date;
 
-import ch.rotscher.budget.repository.StatementRepository;
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
+@NodeEntity
 public class Statement {
 
-	private int id;
+	@GraphId Long id;
 	private Date bookingDate;
 	private String account;
 	private double amount;
@@ -14,11 +16,7 @@ public class Statement {
 	private boolean balanced;
 	
 	
-	public Statement() {
-		this.id = StatementRepository.COUNTER++;
-	}
-
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 	

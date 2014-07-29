@@ -8,17 +8,16 @@ import org.springframework.stereotype.Service;
 import ch.rotscher.budget.model.Account;
 import ch.rotscher.budget.model.AccountTemplate;
 import ch.rotscher.budget.model.BalanceSheet;
-import ch.rotscher.budget.model.Statement;
+import ch.rotscher.budget.neo4j.Statement;
 import ch.rotscher.budget.repository.AccountTemplateRepository;
 import ch.rotscher.budget.repository.BalanceSheetRepository;
-import ch.rotscher.budget.repository.StatementRepository;
 
 @Service
 public class BalanceSheetService {
 
 	@Autowired private AccountTemplateRepository accountRepository;
-	@Autowired private StatementRepository statementRepository;
 	@Autowired private BalanceSheetRepository balanceSheetRepository;
+	@Autowired private StatementService statementService;
 	
 	public BalanceSheet getBalancedAccounts() {
 		List<BalanceSheet> balanceSheets = balanceSheetRepository.findByYear(2014);
@@ -29,7 +28,7 @@ public class BalanceSheetService {
 			balanceSheet = balanceSheets.get(0);
 		}
 		
-		List<Statement> statements = statementRepository.getCurrentStatements();
+		Iterable<Statement> statements = statementService.getCurrentStatements();
 		for (Statement stmt : statements) {
 			if (stmt.isBalanced()) {
 				Account account = findAccount(balanceSheet, stmt.getAccount());

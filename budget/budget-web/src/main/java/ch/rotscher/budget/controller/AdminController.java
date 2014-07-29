@@ -10,13 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import ch.rotscher.budget.service.AccountTemplateService;
-import ch.rotscher.budget.service.StatementService;
 
 @Controller
 public class AdminController {
 
 	@Autowired AccountTemplateService accountTemplateService;
-	@Autowired StatementService statementService;
 	
     @RequestMapping(value = "/admin/accounts/create", method=RequestMethod.GET)
     public ModelAndView getAccounts() {

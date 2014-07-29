@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import com.mongodb.Mongo;
 
 @Configuration
-@EnableMongoRepositories("ch.rotscher")
+@EnableMongoRepositories("ch.rotscher.budget.repository")
 public class AppConfigurator {
 
     @Bean

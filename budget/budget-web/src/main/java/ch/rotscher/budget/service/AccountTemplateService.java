@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.rotscher.budget.model.AccountTemplate;
+import ch.rotscher.budget.neo4j.StatementRepository;
 import ch.rotscher.budget.repository.AccountTemplateRepository;
-import ch.rotscher.budget.repository.StatementRepository;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;

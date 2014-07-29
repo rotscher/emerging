@@ -1,10 +1,7 @@
-<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:neo4j="http://www.springframework.org/schema/data/neo4j" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/context
@@ -12,12 +9,43 @@
                 http://www.springframework.org/schema/tx
                 http://www.springframework.org/schema/tx/spring-tx.xsd
                 http://www.springframework.org/schema/mvc
-                http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+                http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                http://www.springframework.org/schema/data/neo4j
+                http://www.springframework.org/schema/data/neo4j/spring-neo4j-2.0.xsd
+                http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
 
 
-    <context:spring-configured/>
-    <context:annotation-config/>
-    <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-    <context:component-scan base-package="ch.rotscher" />
+<!--     <context:spring-configured /> -->
+<!--     <context:annotation-config /> -->
+<!--     <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" /> -->
+<!--     <neo4j:config storeDirectory="target/config-test" base-package="ch.rotscher.budget.neo4j" /> -->
+
+<!--     <context:component-scan base-package="ch.rotscher.budget.model, ch.rotscher.budget.controller, ch.rotscher.budget.service" /> -->
+<!--     <mvc:annotation-driven /> -->
+
+
+<bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+    <constructor-arg value="http://localhost:7474/db/data/" index="0"/>
+<!-- for running against a server requiring authentication
+    <constructor-arg value="username" index="1"/>
+    <constructor-arg value="password" index="2"/>
+-->
+</bean>
+
+<neo4j:config graphDatabaseService="graphDatabaseService" base-package="ch.rotscher.budget.neo4j" />
+<!--     <neo4j:config storeDirectory="target/config-test" base-package="ch.rotscher.budget.neo4j" /> -->
+    <neo4j:repositories base-package="ch.rotscher.budget.neo4j" />
+
+    <!-- MongoDB -->
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg>
+            <mongo:db-factory />
+        </constructor-arg>
+    </bean>
+
+    <mongo:repositories base-package="ch.rotscher.budget.model, ch.rotscher.budget.repository" />
+    <context:component-scan base-package="ch.rotscher.budget.controller, ch.rotscher.budget.service" />
     <mvc:annotation-driven />
-</beans:beans>
+
+</beans>
