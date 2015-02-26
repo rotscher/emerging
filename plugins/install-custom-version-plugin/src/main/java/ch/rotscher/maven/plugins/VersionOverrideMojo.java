@@ -17,7 +17,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- *
+ * @author Roger Brechbuehl
+ * @goal version-override
  */
 
 @Mojo(name="version-override", defaultPhase= LifecyclePhase.VERIFY)
