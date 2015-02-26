@@ -35,12 +35,12 @@ import java.util.Map;
  * extension of {@link org.apache.maven.model.io.ModelReader} for overriding ${project.version} with the value given as a Java system property:
  * </p>
  * <p>
- * <code>-Dversion.override=A-VERSION</code><br />
- * <br />
- * other options are:<br />
- * <code>-Dversion.override.fail-on-error=[true | false]</code><br />
- * <code>-Dversion.override.strict=[true | false]</code><br />
- * <code>-Dversion.override.check-snapshot-dependency=[true | false]</code><br />
+ * <code>-Dversion.override=A-VERSION</code><br>
+ * <br>
+ * other options are:<br>
+ * <code>-Dversion.override.fail-on-error=[true | false]</code><br>
+ * <code>-Dversion.override.strict=[true | false]</code><br>
+ * <code>-Dversion.override.check-snapshot-dependency=[true | false]</code><br>
  * </p>
  * <p>
  * This class helps releasing a project (from a maven point of view, that means not having "SNAPSHOT" in the version) without actually changing (and committing)
